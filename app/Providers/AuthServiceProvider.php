@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,11 @@ class AuthServiceProvider extends ServiceProvider
         // 一般管理者 Gate 規則
         Gate::define('manager', function ($user) {
             return $user->role === User::ROLE_MANAGER;
+        });
+
+        // 一般老師 Gate 規則
+        Gate::define('teacher', function ($user) {
+            return $user->role === User::ROLE_TEACHER;
         });
 
         // 一般使用者 Gate 規則

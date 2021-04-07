@@ -12,6 +12,7 @@ class User extends Authenticatable
 
     const ROLE_ADMIN = 'admin';
     const ROLE_MANAGER = 'manager';
+    const ROLE_TEACHER = 'teacher';
     const ROLE_USER = 'user';
 
     /**
