@@ -24,11 +24,24 @@ Route::resource('/courses', 'CourseController');
 Route::get('/course/{id}', 'CourseController@courseDetail');
 Route::put('/course/{id}', 'CourseController@update');
 
+
+// 只有admin才可以進入
 Route::prefix('admin')->middleware('can:admin')->group(function () {
+
+    // index
     Route::get('/', 'Admin\AdminController@index');
+
+    // courses
     Route::get('/courses', 'Admin\AdminController@coursesList');
     Route::get('/createCourse', 'Admin\AdminController@createCourses');
     Route::get('/destroyCourse/{id}', 'Admin\AdminController@destroyCourse');
     Route::get('/updateCourse/{id}', 'Admin\AdminController@updateCourse');
     Route::get('/showUpdateCourse/{id}', 'Admin\AdminController@showUpdateCourse');
+
+    // student
+    Route::get('/students', 'Admin\AdminController@studentsList');
+    Route::get('/createStudent', 'Admin\AdminController@createStudent');
+    Route::get('/updateStudent/{id}', 'Admin\AdminController@updateStudent');
+    Route::get('/showUpdateStudent/{id}', 'Admin\AdminController@showUpdateStudent');
+    Route::get('/destroyStudent/{id}', 'Admin\AdminController@destroyStudent');
 });

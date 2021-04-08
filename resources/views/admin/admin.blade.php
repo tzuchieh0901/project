@@ -23,17 +23,17 @@
         body {
             font-size: .875rem;
         }
-        
+
         .feather {
             width: 16px;
             height: 16px;
             vertical-align: text-bottom;
         }
-        
+
         /*
         * Sidebar
         */
-        
+
         .sidebar {
             position: fixed;
             top: 0;
@@ -43,7 +43,7 @@
             padding: 0;
             box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
         }
-        
+
         .sidebar-sticky {
             position: -webkit-sticky;
             position: sticky;
@@ -53,35 +53,35 @@
             overflow-x: hidden;
             overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
         }
-        
+
         .sidebar .nav-link {
             font-weight: 500;
             color: #333;
         }
-        
+
         .sidebar .nav-link .feather {
             margin-right: 4px;
             color: #999;
         }
-        
+
         .sidebar .nav-link.active {
             color: #007bff;
         }
-        
+
         .sidebar .nav-link:hover .feather,
         .sidebar .nav-link.active .feather {
             color: inherit;
         }
-        
+
         .sidebar-heading {
             font-size: .75rem;
             text-transform: uppercase;
         }
-        
+
         /*
         * Navbar
         */
-        
+
         .navbar-brand {
             padding-top: .75rem;
             padding-bottom: .75rem;
@@ -89,28 +89,28 @@
             background-color: rgba(0, 0, 0, .25);
             box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
         }
-        
+
         .navbar .form-control {
             padding: .75rem 1rem;
             border-width: 0;
             border-radius: 0;
         }
-        
+
         .form-control-dark {
             color: #fff;
             background-color: rgba(255, 255, 255, .1);
             border-color: rgba(255, 255, 255, .1);
         }
-        
+
         .form-control-dark:focus {
             border-color: transparent;
             box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
         }
-        
+
         /*
         * Utilities
         */
-        
+
         .border-top { border-top: 1px solid #e5e5e5; }
         .border-bottom { border-bottom: 1px solid #e5e5e5; }
     </style>
@@ -145,25 +145,25 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link dashboard active" href="#">
                         <span data-feather="home"></span>
                         Dashboard <span class="sr-only">(current)</span>
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/admin/courses/') }}">
+                    <a class="nav-link" id="courses" href="{{ url('/admin/courses/') }}">
                         <span data-feather="book-open"></span>
                         Courses
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" id="students" href="{{ url('/admin/students/') }}">
                         <span data-feather="users"></span>
                         Students
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" id="teachers" href="#">
                         <span data-feather="feather"></span>
                         Teachers
                     </a>
@@ -176,7 +176,7 @@
         </main>
     </div>
 
-   
+
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>

@@ -32,7 +32,7 @@ class CourseController extends Controller
 
         return view('course', $result);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -44,7 +44,7 @@ class CourseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 儲存課程資訊
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
