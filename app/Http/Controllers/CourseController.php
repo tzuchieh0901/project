@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
-
+use Illuminate\Support\Facades\Redirect;
 
 class CourseController extends Controller
 {
@@ -29,7 +29,7 @@ class CourseController extends Controller
     {
         $course = Course::find($id)->toArray();
         $result = ['records' => $course];
-        //print_r($result);
+
         return view('course', $result);
     }
     
@@ -51,7 +51,13 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $courseForm = [
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'outline' => $request->get('outline'),
+        ];
+        $status = Course::create($courseForm);
+        return Redirect::to('/admin/courses');
     }
 
     /**

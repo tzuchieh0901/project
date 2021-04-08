@@ -58,6 +58,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    
+                                    @can('admin')
+                                    <a class="dropdown-item" href="{{ url('/admin') }}">
+                                        後台管理
+                                    </a>
+                                    @endcan
+
                                     <a class="dropdown-item" href="/courses">
                                         課程
                                     </a>

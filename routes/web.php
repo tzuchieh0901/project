@@ -19,5 +19,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::post('/courses', 'CourseController@store');
 Route::resource('/courses', 'CourseController');
 Route::get('/course/{id}', 'CourseController@courseDetail');
+Route::put('/course/{id}', 'CourseController@update');
+
+Route::prefix('admin')->middleware('can:admin')->group(function () {
+    Route::get('/', 'Admin\AdminController@index');
+    Route::get('/courses', 'Admin\AdminController@coursesList');
+    Route::get('/createCourse', 'Admin\AdminController@createCourses');
+    Route::get('/destroyCourse/{id}', 'Admin\AdminController@destroyCourse');
+    Route::get('/updateCourse/{id}', 'Admin\AdminController@updateCourse');
+    Route::get('/showUpdateCourse/{id}', 'Admin\AdminController@showUpdateCourse');
+});
