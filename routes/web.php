@@ -25,6 +25,10 @@ Route::get('/course/{id}', 'CourseController@courseDetail');
 Route::put('/course/{id}', 'CourseController@update');
 
 
+// 使用者擁有的課程
+Route::get('/myCourses', 'HomeController@myCourse');
+
+
 // 只有admin才可以進入
 Route::prefix('admin')->middleware('can:admin')->group(function () {
 
@@ -44,4 +48,7 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::get('/updateStudent/{id}', 'Admin\AdminController@updateStudent');
     Route::get('/showUpdateStudent/{id}', 'Admin\AdminController@showUpdateStudent');
     Route::get('/destroyStudent/{id}', 'Admin\AdminController@destroyStudent');
+
+    // teacher
+    Route::get('/teachers', 'Admin\AdminController@teachersList');
 });
