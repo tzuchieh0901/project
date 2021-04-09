@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    104線上學校
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="/courses">
+                                <span data-feather="book-open"></span> 所有課程
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="#">
+                                <span data-feather="shopping-cart"></span> 購物車
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -58,15 +67,15 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    
+
                                     @can('admin')
                                     <a class="dropdown-item" href="{{ url('/admin') }}">
                                         後台管理
                                     </a>
                                     @endcan
 
-                                    <a class="dropdown-item" href="/courses">
-                                        課程
+                                    <a class="dropdown-item" href="{{ url('/myCourses') }}">
+                                        我的課程
                                     </a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -90,5 +99,12 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+        feather.replace({width: '1.5em', height: '1.5em'})
+    </script>
+
 </body>
 </html>

@@ -19,6 +19,7 @@ class CourseSeeder extends Seeder
                 'name' => $courseName,
                 'description' => $faker->text,
                 'outline' => $faker->text,
+                'price'=> rand(500,2000),
             ]);
 
         }

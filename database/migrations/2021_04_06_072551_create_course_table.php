@@ -18,6 +18,7 @@ class CreateCourseTable extends Migration
             $table->string('name', 100);
             $table->string('description', 255);
             $table->text('outline');
+            $table->integer('price');
             $table->timestamps();
 
             $table->index(['created_at']);

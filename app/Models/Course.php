@@ -23,6 +23,7 @@ class Course extends Model
         'name',
         'description',
         'outline',
+        'price',
     ];
 
     /**
@@ -33,5 +34,4 @@ class Course extends Model
     protected $attributes = [
         'outline' => '',
     ];
-
 }

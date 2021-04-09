@@ -16,7 +16,7 @@
                                 <h5 class="card-title">{{ $course['name'] }}</h5>
                             </a>
                             <p class="card-text">{{ $course['description'] }}</p>
-                            <p>NT $999</p>
+                            <p>價格：NT ${{ $course['price'] }}</p>
                         </div>
                     </div>
                 </div>

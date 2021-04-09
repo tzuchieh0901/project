@@ -125,6 +125,9 @@
                     {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('home') }}">
+                        回首頁
+                    </a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
@@ -163,7 +166,7 @@
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" id="teachers" href="#">
+                    <a class="nav-link" id="teachers" href="{{ url('/admin/teachers/') }}">
                         <span data-feather="feather"></span>
                         Teachers
                     </a>

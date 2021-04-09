@@ -34,6 +34,18 @@ class AdminController extends Controller
     }
 
     /**
+     * 後台顯示所有的老師
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function teachersList()
+    {
+        $teachers = User::all()->where('role', '=', 'teacher')->toArray();
+        $result = ['records' => $teachers];
+        return view('Admin/teacher/teachersList', $result);
+    }
+
+    /**
      * 後台顯示所有的課程
      *
      * @return \Illuminate\Http\Response
