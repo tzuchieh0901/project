@@ -22,6 +22,7 @@
                 </div>
             </div>
             @endforeach
+            {!! $records->links() !!}
         @endif
     </div>
 @endsection

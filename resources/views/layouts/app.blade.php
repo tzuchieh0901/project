@@ -34,12 +34,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-primary" href="/courses">
+                            <a class="nav-link text-primary" href="{{ url('/courses') }}">
                                 <span data-feather="book-open"></span> 所有課程
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-primary" href="#">
+                            <a class="nav-link text-primary" href="{{ url('/carts') }}">
                                 <span data-feather="shopping-cart"></span> 購物車
                             </a>
                         </li>
@@ -49,9 +49,6 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="/courses">課程</a>
-                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('登入') }}</a>
                             </li>

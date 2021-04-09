@@ -50,4 +50,19 @@ class User extends Model
             'course_id'
         );
     }
+
+     /**
+     * 回傳使用者放入購物車的課程
+     *
+     * @return array
+     */
+    public function cart()
+    {
+        return $this->belongsToMany(
+            Course::class,
+            'cart',
+            'user_id',
+            'course_id'
+        )->withPivot('id');
+    }
 }

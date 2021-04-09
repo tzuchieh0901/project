@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Pagination\Paginator;
+use Auth;
+use DB;
 
 class CourseController extends Controller
 {
@@ -15,7 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::all()->toArray();
+        $courses = Course::paginate(5);
         $result = ['records' => $courses];
         return view('courses', $result);
     }
@@ -23,13 +26,32 @@ class CourseController extends Controller
     /**
      * 顯示單一課程的詳細資料
      *
+     * Hints:
+     * 1.如果有這堂課的學生，就不要讓他放到購物車
+     *
      * @return \Illuminate\Http\Response
      */
     public function courseDetail($id)
     {
         $course = Course::find($id)->toArray();
-        $result = ['records' => $course];
 
+        // 判斷學生是否擁有這堂課
+        $userId = Auth::user()->id;
+        $haveCourse = DB::table('student_course')
+                            ->where('course_id', '=', $id)
+                            ->where('student_id', '=', $userId)
+                            ->get()
+                            ->toArray();
+        if ($haveCourse) {
+            $haveCourse = true;
+        } else {
+            $haveCourse = false;
+        }
+
+        $result = [
+            'records' => $course,
+            'haveCourse' => $haveCourse,
+        ];
         return view('course', $result);
     }
 

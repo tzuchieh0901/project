@@ -25,8 +25,11 @@ Route::get('/course/{id}', 'CourseController@courseDetail');
 Route::put('/course/{id}', 'CourseController@update');
 
 
-// 使用者擁有的課程
+// 登入後才可以進去
 Route::get('/myCourses', 'HomeController@myCourse');
+Route::get('/carts', 'HomeController@carts');
+Route::get('/removeCartItem/{courseId}', 'HomeController@removeCartItem');
+Route::get('/addCartItem/{courseId}', 'HomeController@addCartItem');
 
 
 // 只有admin才可以進入
