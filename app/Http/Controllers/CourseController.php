@@ -35,23 +35,29 @@ class CourseController extends Controller
     {
         $course = Course::find($id)->toArray();
 
-        // 判斷學生是否擁有這堂課
-        $userId = Auth::user()->id;
-        $haveCourse = DB::table('student_course')
-                            ->where('course_id', '=', $id)
-                            ->where('student_id', '=', $userId)
-                            ->get()
-                            ->toArray();
-        if ($haveCourse) {
-            $haveCourse = true;
+        // 判斷是否有登入
+        if (Auth::check()) {
+            //判斷學生是否擁有這堂課
+            $userId = Auth::user()->id;
+            $haveCourse = DB::table('student_course')
+                                ->where('course_id', '=', $id)
+                                ->where('student_id', '=', $userId)
+                                ->get()
+                                ->toArray();
+            if ($haveCourse) {
+                $haveCourse = true;
+            } else {
+                $haveCourse = false;
+            }
+            $result = [
+                'records' => $course,
+                'haveCourse' => $haveCourse,
+            ];
         } else {
-            $haveCourse = false;
+            $result = [
+                'records' => $course,
+            ];
         }
-
-        $result = [
-            'records' => $course,
-            'haveCourse' => $haveCourse,
-        ];
         return view('course', $result);
     }
 
