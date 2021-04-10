@@ -13,15 +13,23 @@
                             <p class="card-text">課程大綱：<pre>{{ $records['outline'] }}</pre></p>
                             <p class="card-text">最近更新時間：{{ $records['updated_at'] }}</p>
                             <p>價格：NT ${{ $records['price'] }}</p>
-                            @if ( $haveCourse == true)
-                                <button class="btn btn-primary">去上課</button>
-                            @else
-                                <a href="/addCartItem/{{ $records['id'] }}">
-                                    <button type="button" class="btn btn-primary">
-                                        <span data-feather="shopping-cart"></span>   放入購物車
-                                    </button>
-                                </a>
-                            @endif
+                                @guest
+                                    <a href="/addCartItem/{{ $records['id'] }}">
+                                        <button type="button" class="btn btn-primary">
+                                            <span data-feather="shopping-cart"></span>   放入購物車
+                                        </button>
+                                    </a>
+                                @else
+                                    @if ( $haveCourse == true)
+                                        <button class="btn btn-primary">去上課</button>
+                                    @else
+                                        <a href="/addCartItem/{{ $records['id'] }}">
+                                            <button type="button" class="btn btn-primary">
+                                                <span data-feather="shopping-cart"></span>   放入購物車
+                                            </button>
+                                        </a>
+                                    @endif
+                                @endguest
                         </div>
                     </div>
                 </div>
