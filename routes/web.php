@@ -27,9 +27,11 @@ Route::put('/course/{id}', 'CourseController@update');
 
 // 登入後才可以進去
 Route::get('/myCourses', 'HomeController@myCourse');
+Route::get('/myPurchases', 'HomeController@myPurchases');
 Route::get('/carts', 'HomeController@carts');
 Route::get('/removeCartItem/{courseId}', 'HomeController@removeCartItem');
 Route::get('/addCartItem/{courseId}', 'HomeController@addCartItem');
+Route::get('/purchase', 'PurchaseController@store');
 
 
 // 只有admin才可以進入

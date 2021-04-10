@@ -45,7 +45,9 @@
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-6 text-right">
-                        <button class="btn btn-lg btn-block btn-success">付款</button>
+                        <a href="{{ url('/purchase') }}">
+                            <button class="btn btn-lg btn-block btn-success">付款</button>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -75,6 +75,10 @@
                                         我的課程
                                     </a>
 
+                                    <a class="dropdown-item border-bottom" href="{{ url('/myPurchases') }}">
+                                        購買紀錄
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

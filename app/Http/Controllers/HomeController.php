@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 use App\Models\Cart;
+use App\Models\Purchase;
 use Auth;
 
 class HomeController extends Controller
@@ -45,6 +46,19 @@ class HomeController extends Controller
     }
 
     /**
+     * 顯示購買紀錄
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function myPurchases()
+    {
+        $userId = Auth::user()->id;
+        $purchase = Purchase::where('user_id', '=', $userId)->get()->toArray();
+        $result = ['records' => $purchase];
+        return view('myPurchases', $result);
+    }
+
+    /**
      * 顯示購物車頁面
      */
     public function carts()
@@ -60,9 +74,6 @@ class HomeController extends Controller
             'records' => $carts,
             'sum' => $sum,
         ];
-        // echo '<pre>';
-        // print_r($result);
-        // echo '</pre>';
         return view('carts', $result);
     }
 
