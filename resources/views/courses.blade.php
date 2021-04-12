@@ -8,7 +8,11 @@
             <div class="card mb-3">
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                        <img src="https://images.pexels.com/photos/276452/pexels-photo-276452.jpeg" class="img-thumbnail">
+                        @if($course['image'])
+                            <img src="{{ asset($course['image']) }}" class="img-thumbnail">
+                        @else
+                            <img src="https://images.pexels.com/photos/276452/pexels-photo-276452.jpeg" class="img-thumbnail">
+                        @endif
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">

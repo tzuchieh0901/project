@@ -24,6 +24,7 @@ class Course extends Model
         'description',
         'outline',
         'price',
+        'image',
     ];
 
     /**

@@ -25,7 +25,7 @@ Route::get('/course/{id}', 'CourseController@courseDetail');
 Route::put('/course/{id}', 'CourseController@update');
 
 
-// 登入後才可以進去
+// 學生
 Route::get('/myCourses', 'HomeController@myCourse');
 Route::get('/myPurchases', 'HomeController@myPurchases');
 Route::get('/carts', 'HomeController@carts');
@@ -33,8 +33,20 @@ Route::get('/removeCartItem/{courseId}', 'HomeController@removeCartItem');
 Route::get('/addCartItem/{courseId}', 'HomeController@addCartItem');
 Route::get('/purchase', 'PurchaseController@store');
 
+// 老師
+Route::prefix('teacher')->middleware('can:teacher')->group(function () {
+    Route::get('/', 'Teacher\TeacherController@index');
 
-// 只有admin才可以進入
+    // courses
+    Route::get('/courses', 'Teacher\TeacherController@coursesList');
+    Route::get('/createCourse', 'Teacher\TeacherController@createCourses');
+    Route::post('/courses', 'Teacher\TeacherController@teacherStoreCourse');
+    Route::get('/destroyCourse/{id}', 'Teacher\TeacherController@destroyCourse');
+    Route::get('/updateCourse/{id}', 'Teacher\TeacherController@updateCourse');
+    Route::get('/showUpdateCourse/{id}', 'Teacher\TeacherController@showUpdateCourse');
+});
+
+// admin
 Route::prefix('admin')->middleware('can:admin')->group(function () {
 
     // index

@@ -41,6 +41,11 @@ class User extends Model
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * 學生擁有的課程
+     *
+     * @return array
+     */
     public function courses()
     {
         return $this->belongsToMany(
@@ -51,7 +56,22 @@ class User extends Model
         );
     }
 
-     /**
+    /**
+     * 老師擁有的課程
+     *
+     * @return array
+     */
+    public function teacherCourses()
+    {
+        return $this->belongsToMany(
+            Course::class,
+            'teacher_course',
+            'teacher_id',
+            'course_id'
+        );
+    }
+
+    /**
      * 回傳使用者放入購物車的課程
      *
      * @return array

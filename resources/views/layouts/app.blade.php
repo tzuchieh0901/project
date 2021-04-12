@@ -71,6 +71,12 @@
                                     </a>
                                     @endcan
 
+                                    @can('teacher')
+                                    <a class="dropdown-item" href="{{ url('/teacher') }}">
+                                        課程管理
+                                    </a>
+                                    @endcan
+
                                     <a class="dropdown-item" href="{{ url('/myCourses') }}">
                                         我的課程
                                     </a>

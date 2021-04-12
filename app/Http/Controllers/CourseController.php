@@ -83,6 +83,7 @@ class CourseController extends Controller
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'outline' => $request->get('outline'),
+            'price' => $request->get('price'),
         ];
         $status = Course::create($courseForm);
         return Redirect::to('/admin/courses');
