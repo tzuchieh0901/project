@@ -16,7 +16,13 @@
                 <tbody>
                 @foreach ($records as $course)
                     <tr>
-                        <td><img src="https://dummyimage.com/50x50/55595c/fff"></td>
+                        <td>
+                            @if($course['image'])
+                                <img src="{{ $course['image'] }}" style="width:160px; height:80px;">
+                            @else
+                                <img src="https://images.pexels.com/photos/276452/pexels-photo-276452.jpeg" style="width:160px; height:80px;">
+                            @endif
+                        </td>
                         <td>{{ $course['name'] }}</td>
                         <td>NT ${{ $course['price'] }}</td>
                         <td>
