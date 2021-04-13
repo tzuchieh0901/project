@@ -25,7 +25,9 @@
                                     </a>
                                 @else
                                     @if ( $haveCourse == true)
-                                        <button class="btn btn-primary">去上課</button>
+                                        <a href="/classroom/{{ $records['id']}}">
+                                            <button class="btn btn-primary">去上課</button>
+                                        </a>
                                     @else
                                         <a href="/addCartItem/{{ $records['id'] }}">
                                             <button type="button" class="btn btn-primary">

@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label for="price">課程售價</label>
-                <textarea class="form-control" id="price" name="price" rows="3" required="required" placeholder="請輸入課程售價">{{ $records['price'] }}</textarea>
+                <input type="number" class="form-control" id="price" name="price" required="required" placeholder="請輸入課程售價" value="{{ $records['price'] }}">
             </div>
             <button type="submit" class="btn btn-primary">送出</button>
             <a href='{{ url('/teacher/courses') }}'>

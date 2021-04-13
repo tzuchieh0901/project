@@ -38,11 +38,20 @@
                                 <span data-feather="book-open"></span> 所有課程
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-primary" href="{{ url('/carts') }}">
-                                <span data-feather="shopping-cart"></span> 購物車
-                            </a>
-                        </li>
+                        @can('user')
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="{{ url('/carts') }}">
+                                    <span data-feather="shopping-cart"></span> 購物車
+                                </a>
+                            </li>
+                        @endcan
+                        @can('admin')
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="{{ url('/carts') }}">
+                                    <span data-feather="shopping-cart"></span> 購物車
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -77,6 +86,7 @@
                                     </a>
                                     @endcan
 
+                                    @can('user')
                                     <a class="dropdown-item" href="{{ url('/myCourses') }}">
                                         我的課程
                                     </a>
@@ -84,6 +94,7 @@
                                     <a class="dropdown-item border-bottom" href="{{ url('/myPurchases') }}">
                                         購買紀錄
                                     </a>
+                                    @endcan
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -112,6 +123,21 @@
     <script>
         feather.replace({width: '1.5em', height: '1.5em'})
     </script>
+    <style>
+        .bd-toc-link {
+            display: block;
+            padding: .25rem 1.5rem;
+            font-weight: 600;
+            color: rgba(0,0,0,0.65);
+        }
 
+        .bd-sidebar {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 4rem;
+            z-index: 1000;
+            height: calc(100vh - 4rem);
+        }
+    </style>
 </body>
 </html>

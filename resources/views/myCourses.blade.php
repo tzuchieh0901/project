@@ -18,7 +18,9 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $course['name'] }}</h5>
                             <p class="card-text">{{ $course['description'] }}</p>
-                            <button class="btn btn-primary">去上課</button>
+                            <a href="/classroom/{{ $course['id']}}">
+                                <button class="btn btn-primary">去上課</button>
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -29,9 +29,17 @@
                         <td>{{ $course['name'] }}</td>
                         <td>{{ $course['updated_at'] }}</td>
                         <td>
+                            <a type="button" class="btn btn-secondary" data-method="delete"
+                                href="/classroom/{{ $course['id'] }}" >
+                                <span data-feather="book"></span> 教室
+                            </a>
                             <a type="button" class="btn btn-primary" data-method="put"
                                 href="/teacher/showUpdateCourse/{{ $course['id'] }}" >
-                                <span data-feather="edit-2"></span>  修改
+                                <span data-feather="edit-2"></span>  修改課程資訊
+                            </a>
+                            <a type="button" class="btn btn-info" data-method="put"
+                                href="/teacher/showUpdateCourseContent/{{ $course['id'] }}" >
+                                <span data-feather="edit-2"></span>  修改課程內容
                             </a>
                             <a type="button" class="btn btn-danger" data-method="delete"
                                 href="/teacher/destroyCourse/{{ $course['id'] }}" >

@@ -8,6 +8,7 @@ use Auth;
 use App\Models\TeacherCourse;
 use App\Models\User;
 use App\Models\Course;
+use App\models\CourseContent;
 use Illuminate\Support\Facades\Redirect;
 
 class TeacherController extends Controller
@@ -83,10 +84,6 @@ class TeacherController extends Controller
         $userId = Auth::user()->id;
         $teacherCourses = User::find($userId)->teacherCourses()->get()->toArray();
 
-        // echo '<pre>';
-        // print_r($teacherCourses);
-        // echo '</pre>';
-
         $result = ['records' => $teacherCourses];
         return view('Teacher/courseList', $result);
     }
@@ -94,7 +91,7 @@ class TeacherController extends Controller
     /**
      * 刪除課程
      * 1. 從course資料表刪除
-     * 2. 從teacherCourse資料表把刪除
+     * 2. 從teacherCourse資料表刪除
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -129,15 +126,116 @@ class TeacherController extends Controller
     }
 
     /**
-     * 顯示更新課程頁面
+     * 顯示更新課程頁面(課程資訊)
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showUpdateCourse($id)
+    public function showUpdateCourse($courseId)
     {
-        $courses = Course::find($id)->toArray();
-        $result = ['records' => $courses];
+        $courses = Course::find($courseId)->toArray();
+        $result = [
+            'records' => $courses,
+        ];
         return view('Teacher/updateCourse', $result);
+    }
+
+    /**
+     * 顯示更新課程頁面(課程內容)
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUpdateCourseContent($courseId)
+    {
+        $courses = Course::find($courseId)->toArray();
+        $courseContent = CourseContent::where('course_id', '=', $courseId)->get()->toArray();
+        $result = [
+            'courseContent' => $courseContent,
+            'courseId' => $courseId,
+        ];
+        return view('Teacher/courseContent', $result);
+    }
+
+    /**
+     * 刪除課程內容
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteCourseContent($courseId, $contentId)
+    {
+        $courseContent = CourseContent::find($contentId);
+        $courseContent->delete();
+        return Redirect::to("/teacher/showUpdateCourseContent/$courseId");
+    }
+
+    /**
+     * 新增課程內容
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function createCourseContent($courseId)
+    {
+        return view('Teacher/createCourseContent', ['courseId' => $courseId]);
+    }
+
+    /**
+     * 儲存課程內容
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $courseId
+     * @return \Illuminate\Http\Response
+     */
+    public function storeCourseContent(Request $request, $courseId)
+    {
+        $courseContentForm = [
+            'course_id' => $request->get('course_id'),
+            'content_sequence' => $request->get('content_sequence'),
+            'content_chapter_name' => $request->get('content_chapter_name'),
+            'content' => $request->get('content'),
+            'YouTube' => $request->get('YouTube'),
+        ];
+        CourseContent::create($courseContentForm);
+        return Redirect::to("/teacher/courses");
+    }
+
+    /**
+     * 更新課程內容
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateCourseContent($id)
+    {
+        $courseContent = CourseContent::where('id', '=', $id)->get()->toArray();
+        $result = [
+            'id' => $id,
+            'courseContent'=> $courseContent,
+        ];
+        return view('Teacher/updateCourseContent', $result);
+    }
+
+    /**
+     * 儲存更新課程內容
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function storeUpdateCourseContent(Request $request)
+    {
+        $courseContentForm = [
+            'course_id' => $request->get('course_id'),
+            'content_sequence' => $request->get('content_sequence'),
+            'content_chapter_name' => $request->get('content_chapter_name'),
+            'content' => $request->get('content'),
+            'YouTube' => $request->get('YouTube'),
+        ];
+
+        $id = $request->get('id');
+        $courseContent = CourseContent::find($id);
+        $courseContent->update($courseContentForm);
+        return Redirect::to('/teacher/courses');
     }
 }

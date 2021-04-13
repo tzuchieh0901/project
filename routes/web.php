@@ -33,6 +33,9 @@ Route::get('/removeCartItem/{courseId}', 'HomeController@removeCartItem');
 Route::get('/addCartItem/{courseId}', 'HomeController@addCartItem');
 Route::get('/purchase', 'PurchaseController@store');
 
+Route::get('/classroom/{courseId}', 'ClassroomController@index');
+Route::get('/classroom/{courseId}/{content_sequence}', 'ClassroomController@content');
+
 // 老師
 Route::prefix('teacher')->middleware('can:teacher')->group(function () {
     Route::get('/', 'Teacher\TeacherController@index');
@@ -44,6 +47,14 @@ Route::prefix('teacher')->middleware('can:teacher')->group(function () {
     Route::get('/destroyCourse/{id}', 'Teacher\TeacherController@destroyCourse');
     Route::get('/updateCourse/{id}', 'Teacher\TeacherController@updateCourse');
     Route::get('/showUpdateCourse/{id}', 'Teacher\TeacherController@showUpdateCourse');
+
+    // course_content
+    Route::get('/showUpdateCourseContent/{id}', 'Teacher\TeacherController@showUpdateCourseContent');
+    Route::get('/deleteCourseContent/{courseId}/{contentId}', 'Teacher\TeacherController@deleteCourseContent');
+    Route::get('/createCourseContent/{courseId}', 'Teacher\TeacherController@createCourseContent');
+    Route::post('/storeCourseContent/{courseId}', 'Teacher\TeacherController@storeCourseContent');
+    Route::post('/storeUpdateCourseContent/{id}', 'Teacher\TeacherController@storeUpdateCourseContent');
+    Route::get('/updateCourseContent/{id}', 'Teacher\TeacherController@updateCourseContent');
 });
 
 // admin
