@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="container">
-        <h2 class="h2">修改學生資訊</h2>
-        <form action="/admin/updateStudent/{{ $records['id'] }}" method="put">
+        <h2 class="h2">修改老師資訊</h2>
+        <form action="/admin/updateTeacher/{{ $records['id'] }}" method="put">
             @csrf
             <div class="form-group">
-                <label for="name">學生名稱</label>
-                <input type="text" class="form-control" id="name" name="name" required="required" placeholder="請輸入學生名稱" value="{{ $records['name']}}">
+                <label for="name">老師名稱</label>
+                <input type="text" class="form-control" id="name" name="name" required="required" placeholder="請輸入老師名稱" value="{{ $records['name']}}">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
@@ -24,6 +24,6 @@
 
     <script>
         document.querySelector('.active').classList.remove('active');
-        document.getElementById('students').classList.add('active');
+        document.getElementById('teachers').classList.add('active');
     </script>
 @endsection

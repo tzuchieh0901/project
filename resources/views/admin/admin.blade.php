@@ -25,7 +25,7 @@
 
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Laravel</a>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">104線上學校</a>
         <ul class="navbar-nav px-3">
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -55,28 +55,35 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                    <a class="nav-link dashboard active" href="#">
-                        <span data-feather="home"></span>
-                        Dashboard <span class="sr-only">(current)</span>
-                    </a>
+                        <a class="nav-link dashboard active" id="dashboard" href="{{ url('/admin/dashboard') }}">
+                            <span data-feather="home"></span>
+                            Dashboard <span class="sr-only">(current)</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" id="courses" href="{{ url('/admin/courses/') }}">
-                        <span data-feather="book-open"></span>
-                        Courses
-                    </a>
+                        <a class="nav-link" id="courses" href="{{ url('/admin/courses/') }}">
+                            <span data-feather="book-open"></span>
+                            課程
+                        </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" id="students" href="{{ url('/admin/students/') }}">
-                        <span data-feather="users"></span>
-                        Students
-                    </a>
+                        <a class="nav-link" id="students" href="{{ url('/admin/students/') }}">
+                            <span data-feather="users"></span>
+                            學生
+                        </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" id="teachers" href="{{ url('/admin/teachers/') }}">
-                        <span data-feather="feather"></span>
-                        Teachers
-                    </a>
+                        <a class="nav-link" id="teachers" href="{{ url('/admin/teachers/') }}">
+                            <span data-feather="feather"></span>
+                            老師
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="carts" href="{{ url('/admin/carts/') }}">
+                            <span data-feather="shopping-cart"></span>
+                            購物車
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -92,6 +99,14 @@
     <script>
         feather.replace()
     </script>
-
+<style>
+.my-card
+{
+    position:absolute;
+    left:40%;
+    top:-20px;
+    border-radius:50%;
+}
+</style>
 </body>
 </html>

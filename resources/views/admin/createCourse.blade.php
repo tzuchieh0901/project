@@ -17,7 +17,10 @@
                 <label for="outline">課程大綱</label>
                 <textarea class="form-control" id="outline" name="outline" rows="3" required="required" placeholder="請輸入課程大綱"></textarea>
             </div>
-
+            <div class="form-group">
+                <label for="price">課程售價</label>
+                <input type="number" class="form-control" id="price" name="price" required="required" placeholder="請輸入課程售價">
+            </div>
             <button type="submit" class="btn btn-primary">送出</button>
         </form>
     </div>

@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'CourseController@home');
 
 Auth::routes();
 
@@ -62,6 +60,7 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
 
     // index
     Route::get('/', 'Admin\AdminController@index');
+    Route::get('/dashboard', 'Admin\AdminController@index');
 
     // courses
     Route::get('/courses', 'Admin\AdminController@coursesList');
@@ -79,4 +78,15 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
 
     // teacher
     Route::get('/teachers', 'Admin\AdminController@teachersList');
+    Route::get('/destroyTeacher/{id}', 'Admin\AdminController@destroyTeacher');
+    Route::get('/updateTeacher/{id}', 'Admin\AdminController@updateTeacher');
+    Route::get('/showUpdateTeacher/{id}', 'Admin\AdminController@showUpdateTeacher');
+
+    // cart
+    Route::get('/carts', 'Admin\AdminController@cartsList');
+    Route::get('/destroyCart/{id}', 'Admin\AdminController@destroyCart');
+    Route::get('/updateCart/{id}', 'Admin\AdminController@updateCart');
+    Route::get('/showUpdateCart/{id}', 'Admin\AdminController@showUpdateCart');
+    Route::get('/createCart', 'Admin\AdminController@createCart');
+    Route::post('/carts', 'Admin\AdminController@storeCart');
 });

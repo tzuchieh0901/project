@@ -24,6 +24,16 @@ class CourseController extends Controller
     }
 
     /**
+     * 首頁
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function home()
+    {
+        return view('welcome');
+    }
+
+    /**
      * 顯示單一課程的詳細資料
      *
      * Hints:

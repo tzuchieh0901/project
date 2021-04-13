@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\Cart;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -12,13 +13,21 @@ use Illuminate\Support\Facades\Redirect;
 class AdminController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Dashboard
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('Admin/admin');
+        $courseCount = Course::count();
+        $studentCount = User::where('role', '=', 'user')->count();
+        $teacherCount = User::where('role', '=', 'teacher')->count();
+        $dataForm = [
+            'courseCount' => $courseCount,
+            'studentCount' => $studentCount,
+            'teacherCount' => $teacherCount,
+        ];
+        return view('Admin/dashboard', $dataForm);
     }
 
     /**
@@ -58,6 +67,18 @@ class AdminController extends Controller
     }
 
     /**
+     * 後台顯示所有的購物車
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function cartsList()
+    {
+        $carts = Cart::all()->toArray();
+        $result = ['records' => $carts];
+        return view('Admin/cart/cartList', $result);
+    }
+
+    /**
      * 新增課程頁面
      *
      * @return \Illuminate\Http\Response
@@ -65,6 +86,16 @@ class AdminController extends Controller
     public function createCourses()
     {
         return view('Admin/createCourse');
+    }
+
+    /**
+     * 新增購物車頁面
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createCart()
+    {
+        return view('Admin/cart/createCart');
     }
 
     /**
@@ -78,39 +109,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * 更新課程資訊
      *
      * @param  \Illuminate\Http\Request  $request
@@ -119,12 +117,6 @@ class AdminController extends Controller
      */
     public function updateCourse(Request $request, $id)
     {
-        $courseForm = [
-            'name' => $request->get('name'),
-            'description' => trim($request->get('description')) ?? '',
-            'outline' => $request->get('outline') ?? '',
-        ];
-
         $course = Course::find($id);
         $status = $course->update($request->toArray());
         return Redirect::to('/admin/courses');
@@ -165,6 +157,46 @@ class AdminController extends Controller
     }
 
     /**
+     * 更新教師資訊
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTeacher(Request $request, $id)
+    {
+        $teacherForm = [
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'role' => 'teacher',
+            'password' => Hash::make($request->get('password')),
+        ];
+
+        $teacher = User::find($id);
+        $status = $teacher->update($teacherForm);
+        return Redirect::to('/admin/teachers');
+    }
+
+    /**
+     * 更新購物車資訊
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateCart(Request $request, $id)
+    {
+        $cartForm = [
+            'user_id' => $request->get('user_id'),
+            'course_id' => $request->get('course_id'),
+        ];
+
+        $cart = Cart::find($id);
+        $status = $cart->update($cartForm);
+        return Redirect::to('/admin/carts');
+    }
+
+    /**
      * 顯示更新學生頁面
      *
      * @param  int  $id
@@ -175,6 +207,32 @@ class AdminController extends Controller
         $student = User::find($id)->toArray();
         $result = ['records' => $student];
         return view('Admin/student/updateStudent', $result);
+    }
+
+    /**
+     * 顯示更新教師頁面
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUpdateTeacher($id)
+    {
+        $teacher = User::find($id)->toArray();
+        $result = ['records' => $teacher];
+        return view('Admin/teacher/updateTeacher', $result);
+    }
+
+    /**
+     * 顯示更新購物車頁面
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUpdateCart($id)
+    {
+        $cart = Cart::find($id)->toArray();
+        $result = ['records' => $cart];
+        return view('Admin/cart/updateCart', $result);
     }
 
     /**
@@ -201,5 +259,47 @@ class AdminController extends Controller
         $student = User::find($id);
         $status = $student->delete();
         return Redirect::to('/admin/students');
+    }
+
+    /**
+     * 刪除老師
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyTeacher($id)
+    {
+        $teacher = User::find($id);
+        $status = $teacher->delete();
+        return Redirect::to('/admin/teachers');
+    }
+
+    /**
+     * 刪除購物車
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyCart($id)
+    {
+        $cart = Cart::find($id);
+        $status = $cart->delete();
+        return Redirect::to('/admin/carts');
+    }
+
+    /**
+     * 儲存購物車
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeCart(Request $request)
+    {
+        $cartForm = [
+            'course_id' => $request->get('course_id'),
+            'user_id' => $request->get('user_id'),
+        ];
+        $status = Cart::create($cartForm);
+        return Redirect::to('/admin/carts');
     }
 }
