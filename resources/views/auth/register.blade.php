@@ -43,7 +43,7 @@
                             <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('身份') }}</label>
 
                             <div class="col-md-6">
-                                <select id="role" name="role" class="form-control @error('password') is-invalid @enderror" name="role" required>
+                                <select id="role" name="role" class="form-control @error('role') is-invalid @enderror" name="role" required>
                                     <option value="" selected>請選擇身份</option>
                                     <option value="teacher">老師</option>
                                     <option value="user" >學生</option>
