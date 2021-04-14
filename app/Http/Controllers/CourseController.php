@@ -18,7 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::paginate(5);
+        $courses = Course::with('teacher')->paginate(5);
         $result = ['records' => $courses];
         return view('courses', $result);
     }

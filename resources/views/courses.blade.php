@@ -8,10 +8,10 @@
             <div class="card mb-3">
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                        @if($course['image'])
-                            <img src="{{ asset($course['image']) }}" class="img-thumbnail">
-                        @else
+                        @if($course['image'] === null)
                             <img src="https://images.pexels.com/photos/276452/pexels-photo-276452.jpeg" class="img-thumbnail">
+                        @else
+                            <img src="{{ asset($course['image']) }}" class="img-thumbnail">
                         @endif
                     </div>
                     <div class="col-md-8">
@@ -20,6 +20,9 @@
                                 <h5 class="card-title">{{ $course['name'] }}</h5>
                             </a>
                             <p class="card-text">{{ $course['description'] }}</p>
+                                @foreach ($course['teacher'] as $teacher)
+                                    <p>老師：{{ $teacher['name'] }}</p>
+                                @endforeach
                             <p>價格：NT ${{ $course['price'] }}</p>
                         </div>
                     </div>

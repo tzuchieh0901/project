@@ -35,4 +35,19 @@ class Course extends Model
     protected $attributes = [
         'outline' => '',
     ];
+
+    /**
+     * 課程的老師
+     *
+     * @return array
+     */
+    public function teacher()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'teacher_course',
+            'course_id',
+            'teacher_id'
+        );
+    }
 }
