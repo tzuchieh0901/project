@@ -50,6 +50,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof WebException) {
+            return response()->json(
+                [
+                    'message' => $exception->getMessage(),
+                    'code' => $exception->getCode(),
+                ],
+                $exception->getCode()
+            );
+        }
         return parent::render($request, $exception);
     }
 }
