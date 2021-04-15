@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\models\CourseContent;
 use App\models\StudentCourse;
+use App\models\TeacherCourse;
 use App\models\Course;
+use App\models\User;
 use Auth;
+use Exception;
+use App\Exceptions\WebException;
 
 class ClassroomController extends Controller
 {
@@ -28,12 +32,25 @@ class ClassroomController extends Controller
      */
     public function index($id)
     {
-        // 驗證有沒有課程的權限
         $userId = Auth::user()->id;
-        $checkAuthorize = StudentCourse::where('course_id', '=', $id)
-            ->where('student_id', '=', $userId)->get()->toArray();
-        if (!$checkAuthorize) {
-            return '您尚未購買此課程';
+
+        // 判斷身份(老師、學生、管理者)
+        $checkRole = User::where('id', '=', $userId)->select('role')->get()->toArray();
+        $role = $checkRole[0]['role'];
+
+        // 判斷是否有權限
+        if ($role == 'teacher') {
+            $checkTeacherAuthorize = TeacherCourse::where('course_id', '=', $id)
+                ->where('teacher_id', '=', $userId)->get()->toArray();
+            if (!$checkTeacherAuthorize) {
+                throw new WebException('您沒不是此堂課的老師', 403);
+            }
+        } elseif ($role == 'user') {
+            $checkUserAuthorize = StudentCourse::where('course_id', '=', $id)
+                ->where('student_id', '=', $userId)->get()->toArray();
+            if (!$checkUserAuthorize) {
+                throw new WebException('您沒有購買此課程', 403);
+            }
         }
 
         $courseName = Course::where('id', '=', $id)->get('name')->toArray();
@@ -42,6 +59,7 @@ class ClassroomController extends Controller
             'records' => $courseContent,
             'courseName' => $courseName,
         ];
+
         return view('classroom', $result);
     }
 
@@ -54,12 +72,25 @@ class ClassroomController extends Controller
      */
     public function content($courseId, $content_sequence)
     {
-        // 驗證有沒有課程的權限
         $userId = Auth::user()->id;
-        $checkAuthorize = StudentCourse::where('course_id', '=', $courseId)
-            ->where('student_id', '=', $userId)->get()->toArray();
-        if (!$checkAuthorize) {
-            return '您尚未購買此課程';
+
+        // 判斷身份(老師、學生、管理者)
+        $checkRole = User::where('id', '=', $userId)->select('role')->get()->toArray();
+        $role = $checkRole[0]['role'];
+
+        // 判斷是否有權限
+        if ($role == 'teacher') {
+            $checkTeacherAuthorize = TeacherCourse::where('course_id', '=', $id)
+                ->where('teacher_id', '=', $userId)->get()->toArray();
+            if (!$checkTeacherAuthorize) {
+                throw new WebException('您沒不是此堂課的老師', 403);
+            }
+        } elseif ($role == 'user') {
+            $checkUserAuthorize = StudentCourse::where('course_id', '=', $id)
+                ->where('student_id', '=', $userId)->get()->toArray();
+            if (!$checkUserAuthorize) {
+                throw new WebException('您沒有購買此課程', 403);
+            }
         }
 
         $courseName = Course::where('id', '=', $courseId)->get('name')->toArray();
