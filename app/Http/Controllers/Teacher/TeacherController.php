@@ -30,7 +30,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('Teacher/teacher');
+        return view('teacher/teacher');
     }
 
     /**
@@ -40,7 +40,7 @@ class TeacherController extends Controller
      */
     public function createCourses()
     {
-        return view('Teacher/createCourse');
+        return view('teacher/createCourse');
     }
 
     /**
@@ -85,7 +85,7 @@ class TeacherController extends Controller
         $teacherCourses = User::find($userId)->teacherCourses()->get()->toArray();
 
         $result = ['records' => $teacherCourses];
-        return view('Teacher/courseList', $result);
+        return view('teacher/courseList', $result);
     }
 
     /**
@@ -137,7 +137,7 @@ class TeacherController extends Controller
         $result = [
             'records' => $courses,
         ];
-        return view('Teacher/updateCourse', $result);
+        return view('teacher/updateCourse', $result);
     }
 
     /**
@@ -154,7 +154,7 @@ class TeacherController extends Controller
             'courseContent' => $courseContent,
             'courseId' => $courseId,
         ];
-        return view('Teacher/courseContent', $result);
+        return view('teacher/courseContent', $result);
     }
 
     /**
@@ -178,7 +178,7 @@ class TeacherController extends Controller
      */
     public function createCourseContent($courseId)
     {
-        return view('Teacher/createCourseContent', ['courseId' => $courseId]);
+        return view('teacher/createCourseContent', ['courseId' => $courseId]);
     }
 
     /**
@@ -214,7 +214,7 @@ class TeacherController extends Controller
             'id' => $id,
             'courseContent'=> $courseContent,
         ];
-        return view('Teacher/updateCourseContent', $result);
+        return view('teacher/updateCourseContent', $result);
     }
 
     /**

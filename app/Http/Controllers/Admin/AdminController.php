@@ -27,7 +27,7 @@ class AdminController extends Controller
             'studentCount' => $studentCount,
             'teacherCount' => $teacherCount,
         ];
-        return view('Admin/dashboard', $dataForm);
+        return view('admin/dashboard', $dataForm);
     }
 
     /**
@@ -39,7 +39,7 @@ class AdminController extends Controller
     {
         $users = User::all()->where('role', '=', 'user')->toArray();
         $result = ['records' => $users];
-        return view('Admin/student/studentsList', $result);
+        return view('admin/student/studentsList', $result);
     }
 
     /**
@@ -51,7 +51,7 @@ class AdminController extends Controller
     {
         $teachers = User::all()->where('role', '=', 'teacher')->toArray();
         $result = ['records' => $teachers];
-        return view('Admin/teacher/teachersList', $result);
+        return view('admin/teacher/teachersList', $result);
     }
 
     /**
@@ -63,7 +63,7 @@ class AdminController extends Controller
     {
         $courses = Course::all()->toArray();
         $result = ['records' => $courses];
-        return view('Admin/courseList', $result);
+        return view('admin/courseList', $result);
     }
 
     /**
@@ -75,7 +75,7 @@ class AdminController extends Controller
     {
         $carts = Cart::all()->toArray();
         $result = ['records' => $carts];
-        return view('Admin/cart/cartList', $result);
+        return view('admin/cart/cartList', $result);
     }
 
     /**
@@ -85,7 +85,7 @@ class AdminController extends Controller
      */
     public function createCourses()
     {
-        return view('Admin/createCourse');
+        return view('admin/createCourse');
     }
 
     /**
@@ -95,7 +95,7 @@ class AdminController extends Controller
      */
     public function createCart()
     {
-        return view('Admin/cart/createCart');
+        return view('admin/cart/createCart');
     }
 
     /**
@@ -105,7 +105,7 @@ class AdminController extends Controller
      */
     public function createStudent()
     {
-        return view('Admin/student/createStudent');
+        return view('admin/student/createStudent');
     }
 
     /**
@@ -132,7 +132,7 @@ class AdminController extends Controller
     {
         $courses = Course::find($id)->toArray();
         $result = ['records' => $courses];
-        return view('Admin/updateCourse', $result);
+        return view('admin/updateCourse', $result);
     }
 
     /**
@@ -206,7 +206,7 @@ class AdminController extends Controller
     {
         $student = User::find($id)->toArray();
         $result = ['records' => $student];
-        return view('Admin/student/updateStudent', $result);
+        return view('admin/student/updateStudent', $result);
     }
 
     /**
@@ -219,7 +219,7 @@ class AdminController extends Controller
     {
         $teacher = User::find($id)->toArray();
         $result = ['records' => $teacher];
-        return view('Admin/teacher/updateTeacher', $result);
+        return view('admin/teacher/updateTeacher', $result);
     }
 
     /**
@@ -232,7 +232,7 @@ class AdminController extends Controller
     {
         $cart = Cart::find($id)->toArray();
         $result = ['records' => $cart];
-        return view('Admin/cart/updateCart', $result);
+        return view('admin/cart/updateCart', $result);
     }
 
     /**
