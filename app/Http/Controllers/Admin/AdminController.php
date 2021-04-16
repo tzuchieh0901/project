@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\Purchase;
 use App\Models\Cart;
 use App\User;
 use Illuminate\Support\Facades\Hash;
@@ -22,10 +23,13 @@ class AdminController extends Controller
         $courseCount = Course::count();
         $studentCount = User::where('role', '=', 'user')->count();
         $teacherCount = User::where('role', '=', 'teacher')->count();
+        $purchaseCount = Purchase::count();
+
         $dataForm = [
             'courseCount' => $courseCount,
             'studentCount' => $studentCount,
             'teacherCount' => $teacherCount,
+            'purchaseCount' => $purchaseCount,
         ];
         return view('admin/dashboard', $dataForm);
     }
@@ -79,6 +83,18 @@ class AdminController extends Controller
     }
 
     /**
+     * 後台顯示所有的訂單
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function purchaseList()
+    {
+        $purchases = Purchase::all()->toArray();
+        $result = ['records' => $purchases];
+        return view('admin/purchase/purchaseList', $result);
+    }
+
+    /**
      * 新增課程頁面
      *
      * @return \Illuminate\Http\Response
@@ -106,6 +122,16 @@ class AdminController extends Controller
     public function createStudent()
     {
         return view('admin/student/createStudent');
+    }
+
+    /**
+     * 新增訂單頁面
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createPurchase()
+    {
+        return view('admin/purchase/createPurchase');
     }
 
     /**
@@ -197,6 +223,27 @@ class AdminController extends Controller
     }
 
     /**
+     * 更新購物車資訊
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePurchase(Request $request, $id)
+    {
+        $purchaseForm = [
+            'user_id' => $request->get('user_id'),
+            'course_id' => $request->get('course_id'),
+            'course_name' => $request->get('course_name'),
+            'price' => $request->get('price'),
+        ];
+
+        $purchase = Purchase::find($id);
+        $status = $purchase->update($purchaseForm);
+        return Redirect::to('/admin/purchases');
+    }
+
+    /**
      * 顯示更新學生頁面
      *
      * @param  int  $id
@@ -233,6 +280,19 @@ class AdminController extends Controller
         $cart = Cart::find($id)->toArray();
         $result = ['records' => $cart];
         return view('admin/cart/updateCart', $result);
+    }
+
+    /**
+     * 顯示更新購物車頁面
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUpdatePurchase($id)
+    {
+        $purchase = Purchase::find($id)->toArray();
+        $result = ['records' => $purchase];
+        return view('admin/purchase/updatePurchase', $result);
     }
 
     /**
@@ -288,6 +348,19 @@ class AdminController extends Controller
     }
 
     /**
+     * 刪除訂單
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyPurchase($id)
+    {
+        $cart = Purchase::find($id);
+        $status = $cart->delete();
+        return Redirect::to('/admin/purchases');
+    }
+
+    /**
      * 儲存購物車
      *
      * @param  \Illuminate\Http\Request  $request
@@ -301,5 +374,23 @@ class AdminController extends Controller
         ];
         $status = Cart::create($cartForm);
         return Redirect::to('/admin/carts');
+    }
+
+    /**
+     * 儲存購物車
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storePurchase(Request $request)
+    {
+        $purchaseForm = [
+            'course_id' => $request->get('course_id'),
+            'user_id' => $request->get('user_id'),
+            'course_name' => $request->get('course_name'),
+            'price' => $request->get('price'),
+        ];
+        $status = Purchase::create($purchaseForm);
+        return Redirect::to('/admin/purchases');
     }
 }

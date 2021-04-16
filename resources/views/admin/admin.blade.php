@@ -84,6 +84,12 @@
                             購物車
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="purchases" href="{{ url('/admin/purchases/') }}">
+                            <span data-feather="credit-card"></span>
+                            訂單
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>

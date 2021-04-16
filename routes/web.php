@@ -18,7 +18,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/courses', 'CourseController@store');
-Route::resource('/courses', 'CourseController');
+Route::get('/courses', 'CourseController@index');
 Route::get('/course/{id}', 'CourseController@courseDetail');
 Route::put('/course/{id}', 'CourseController@update');
 
@@ -89,4 +89,12 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::get('/showUpdateCart/{id}', 'Admin\AdminController@showUpdateCart');
     Route::get('/createCart', 'Admin\AdminController@createCart');
     Route::post('/carts', 'Admin\AdminController@storeCart');
+
+    // purchase
+    Route::get('/purchases', 'Admin\AdminController@purchaseList');
+    Route::get('/destroyPurchase/{id}', 'Admin\AdminController@destroyPurchase');
+    Route::get('/updatePurchase/{id}', 'Admin\AdminController@updatePurchase');
+    Route::get('/showUpdatePurchase/{id}', 'Admin\AdminController@showUpdatePurchase');
+    Route::get('/createPurchase', 'Admin\AdminController@createPurchase');
+    Route::post('/purchases', 'Admin\AdminController@storePurchase');
 });
