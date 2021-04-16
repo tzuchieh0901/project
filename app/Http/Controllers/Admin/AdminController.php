@@ -67,7 +67,7 @@ class AdminController extends Controller
     {
         $courses = Course::all()->toArray();
         $result = ['records' => $courses];
-        return view('admin/courseList', $result);
+        return view('admin/course/courseList', $result);
     }
 
     /**
@@ -101,7 +101,7 @@ class AdminController extends Controller
      */
     public function createCourses()
     {
-        return view('admin/createCourse');
+        return view('admin/course/createCourse');
     }
 
     /**
@@ -158,7 +158,7 @@ class AdminController extends Controller
     {
         $courses = Course::find($id)->toArray();
         $result = ['records' => $courses];
-        return view('admin/updateCourse', $result);
+        return view('admin/course/updateCourse', $result);
     }
 
     /**
