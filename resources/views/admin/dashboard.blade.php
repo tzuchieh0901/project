@@ -28,6 +28,13 @@
                     <div class="text-danger text-center mt-2"><h1>{{ $teacherCount }}位</h1></div>
                 </div>
             </div>
+            <div class="col-md-3" style="top: 20px;">
+                <div class="card border-secondary mx-sm-1 p-3">
+                    <div class="card border-secondary shadow text-secondary p-3 my-card" ><span data-feather="credit-card"></span></div>
+                    <div class="text-secondary text-center mt-3"><h4>訂單</h4></div>
+                    <div class="text-secondary text-center mt-2"><h1>{{ $purchaseCount }}筆</h1></div>
+                </div>
+            </div>
         </div>
 
     </div>
