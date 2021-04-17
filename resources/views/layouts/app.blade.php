@@ -59,11 +59,19 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('登入') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">
+                                    <button class="btn btn-outline-primary">
+                                        {{ __('登入') }}
+                                    </button>
+                                </a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('註冊') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">
+                                        <button class="btn btn-primary">
+                                            {{ __('註冊') }}
+                                        </button>
+                                    </a>
                                 </li>
                             @endif
                         @else
