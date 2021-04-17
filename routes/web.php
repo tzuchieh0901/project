@@ -105,4 +105,20 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::get('/showUpdateCourseContent/{id}', 'Admin\AdminController@showUpdateCourseContent');
     Route::get('/createCourseContent', 'Admin\AdminController@createCourseContent');
     Route::post('/courseContents', 'Admin\AdminController@storeCourseContent');
+
+    // teacher_course
+    Route::get('/teacherCourses', 'Admin\AdminController@teacherCourseList');
+    Route::get('/destroyTeacherCourse/{id}', 'Admin\AdminController@destroyTeacherCourse');
+    Route::get('/updateTeacherCourse/{id}', 'Admin\AdminController@updateTeacherCourse');
+    Route::get('/showUpdateTeacherCourse/{id}', 'Admin\AdminController@showUpdateTeacherCourse');
+    Route::get('/createTeacherCourse', 'Admin\AdminController@createTeacherCourse');
+    Route::post('/teacherCourses', 'Admin\AdminController@storeTeacherCourse');
+
+    // student_course
+    Route::get('/studentCourses', 'Admin\AdminController@studentCourseList');
+    Route::get('/destroyStudentCourse/{id}', 'Admin\AdminController@destroyStudentCourse');
+    Route::get('/updateStudentCourse/{id}', 'Admin\AdminController@updateStudentCourse');
+    Route::get('/showUpdateStudentCourse/{id}', 'Admin\AdminController@showUpdateStudentCourse');
+    Route::get('/createStudentCourse', 'Admin\AdminController@createStudentCourse');
+    Route::post('/studentCourses', 'Admin\AdminController@storeStudentCourse');
 });

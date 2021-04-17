@@ -79,13 +79,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="teachers" href="{{ url('/admin/teachers/') }}">
-                            <span data-feather="feather"></span>
-                            老師資訊
+                        <a class="nav-link" id="student_courses" href="{{ url('/admin/studentCourses/') }}">
+                            <span data-feather="shopping-bag"></span>
+                            學生的課程
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="teacher_courses" href="{{ url('/admin/teachers/') }}">
+                        <a class="nav-link" id="teachers" href="{{ url('/admin/teachers/') }}">
+                            <span data-feather="feather"></span>
+                            老師
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="teacher_courses" href="{{ url('/admin/teacherCourses/') }}">
                             <span data-feather="archive"></span>
                             老師的課程
                         </a>

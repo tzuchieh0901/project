@@ -8,6 +8,8 @@ use App\Models\Course;
 use App\Models\Purchase;
 use App\Models\Cart;
 use App\Models\CourseContent;
+use App\Models\TeacherCourse;
+use App\Models\StudentCourse;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -108,6 +110,30 @@ class AdminController extends Controller
     }
 
     /**
+     * 後台顯示所有老師的課程
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function teacherCourseList()
+    {
+        $teacherCourses = TeacherCourse::all()->toArray();
+        $result = ['records' => $teacherCourses];
+        return view('admin/teacherCourse/teacherCourseList', $result);
+    }
+
+    /**
+     * 後台顯示所有老師的課程
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function studentCourseList()
+    {
+        $studentCourses = StudentCourse::all()->toArray();
+        $result = ['records' => $studentCourses];
+        return view('admin/studentCourse/studentCourseList', $result);
+    }
+
+    /**
      * 新增課程頁面
      *
      * @return \Illuminate\Http\Response
@@ -155,6 +181,26 @@ class AdminController extends Controller
     public function createCourseContent()
     {
         return view('admin/courseContent/createCourseContent');
+    }
+
+    /**
+     * 新增老師課程頁面
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createTeacherCourse()
+    {
+        return view('admin/teacherCourse/createTeacherCourse');
+    }
+
+    /**
+     * 新增學生課程頁面
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createStudentCourse()
+    {
+        return view('admin/studentCourse/createStudentCourse');
     }
 
     /**
@@ -289,6 +335,44 @@ class AdminController extends Controller
     }
 
     /**
+     * 更新老師的課程資訊
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTeacherCourse(Request $request, $id)
+    {
+        $teacherCourseForm = [
+            'course_id' => $request->get('course_id'),
+            'teacher_id' => $request->get('teacher_id'),
+        ];
+
+        $teacherCourse = TeacherCourse::find($id);
+        $status = $teacherCourse->update($teacherCourseForm);
+        return Redirect::to('/admin/teacherCourses');
+    }
+
+    /**
+     * 更新學生的課程資訊
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStudentCourse(Request $request, $id)
+    {
+        $studentCourseForm = [
+            'course_id' => $request->get('course_id'),
+            'student_id' => $request->get('student_id'),
+        ];
+
+        $studentCourse = StudentCourse::find($id);
+        $status = $studentCourse->update($studentCourseForm);
+        return Redirect::to('/admin/studentCourses');
+    }
+
+    /**
      * 顯示更新學生頁面
      *
      * @param  int  $id
@@ -350,7 +434,33 @@ class AdminController extends Controller
     {
         $courseContent = CourseContent::find($id)->toArray();
         $result = ['records' => $courseContent];
-        return view('admin/CourseContent/updateCourseContent', $result);
+        return view('admin/courseContent/updateCourseContent', $result);
+    }
+
+    /**
+     * 顯示更新老師的課程頁面
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUpdateTeacherCourse($id)
+    {
+        $teacherCourse = TeacherCourse::find($id)->toArray();
+        $result = ['records' => $teacherCourse];
+        return view('admin/teacherCourse/updateTeacherCourse', $result);
+    }
+
+    /**
+     * 顯示更新學生的課程頁面
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUpdateStudentCourse($id)
+    {
+        $studentCourse = StudentCourse::find($id)->toArray();
+        $result = ['records' => $studentCourse];
+        return view('admin/studentCourse/updateStudentCourse', $result);
     }
 
     /**
@@ -432,6 +542,32 @@ class AdminController extends Controller
     }
 
     /**
+     * 刪除老師的課程
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyTeacherCourse($id)
+    {
+        $teacherCourse = TeacherCourse::find($id);
+        $status = $teacherCourse->delete();
+        return Redirect::to('/admin/teacherCourses');
+    }
+
+    /**
+     * 刪除學生的課程
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyStudentCourse($id)
+    {
+        $studentCourse = StudentCourse::find($id);
+        $status = $studentCourse->delete();
+        return Redirect::to('/admin/studentCourses');
+    }
+
+    /**
      * 儲存購物車
      *
      * @param  \Illuminate\Http\Request  $request
@@ -482,5 +618,37 @@ class AdminController extends Controller
         ];
         $status = CourseContent::create($courseContentForm);
         return Redirect::to('/admin/courseContents');
+    }
+
+    /**
+     * 儲存老師的課程
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeTeacherCourse(Request $request)
+    {
+        $teacherCourseForm = [
+            'teacher_id' => $request->get('teacher_id'),
+            'course_id' => $request->get('course_id'),
+        ];
+        $status = TeacherCourse::create($teacherCourseForm);
+        return Redirect::to('/admin/teacherCourses');
+    }
+
+    /**
+     * 儲存學生的課程
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeStudentCourse(Request $request)
+    {
+        $studentCourseForm = [
+            'student_id' => $request->get('student_id'),
+            'course_id' => $request->get('course_id'),
+        ];
+        $status = StudentCourse::create($studentCourseForm);
+        return Redirect::to('/admin/studentCourses');
     }
 }
