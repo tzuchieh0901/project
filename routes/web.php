@@ -97,4 +97,12 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::get('/showUpdatePurchase/{id}', 'Admin\AdminController@showUpdatePurchase');
     Route::get('/createPurchase', 'Admin\AdminController@createPurchase');
     Route::post('/purchases', 'Admin\AdminController@storePurchase');
+
+    // course_content
+    Route::get('/courseContents', 'Admin\AdminController@courseContentList');
+    Route::get('/destroyCourseContent/{id}', 'Admin\AdminController@destroyCourseContent');
+    Route::get('/updateCourseContent/{id}', 'Admin\AdminController@updateCourseContent');
+    Route::get('/showUpdateCourseContent/{id}', 'Admin\AdminController@showUpdateCourseContent');
+    Route::get('/createCourseContent', 'Admin\AdminController@createCourseContent');
+    Route::post('/courseContents', 'Admin\AdminController@storeCourseContent');
 });

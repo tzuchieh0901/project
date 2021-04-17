@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Purchase;
 use App\Models\Cart;
+use App\Models\CourseContent;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -95,6 +96,18 @@ class AdminController extends Controller
     }
 
     /**
+     * 後台顯示所有的課程內容
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function courseContentList()
+    {
+        $courseContents = CourseContent::all()->toArray();
+        $result = ['records' => $courseContents];
+        return view('admin/courseContent/courseContentList', $result);
+    }
+
+    /**
      * 新增課程頁面
      *
      * @return \Illuminate\Http\Response
@@ -132,6 +145,16 @@ class AdminController extends Controller
     public function createPurchase()
     {
         return view('admin/purchase/createPurchase');
+    }
+
+    /**
+     * 新增課程內容頁面
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createCourseContent()
+    {
+        return view('admin/courseContent/createCourseContent');
     }
 
     /**
@@ -244,6 +267,28 @@ class AdminController extends Controller
     }
 
     /**
+     * 更新課程內容資訊
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateCourseContent(Request $request, $id)
+    {
+        $courseContentForm = [
+            'course_id' => $request->get('course_id'),
+            'content_sequence' => $request->get('content_sequence'),
+            'content_chapter_name' => $request->get('content_chapter_name'),
+            'content' => $request->get('content'),
+            'YouTube' => $request->get('YouTube'),
+        ];
+
+        $courseContent = CourseContent::find($id);
+        $status = $courseContent->update($courseContentForm);
+        return Redirect::to('/admin/courseContents');
+    }
+
+    /**
      * 顯示更新學生頁面
      *
      * @param  int  $id
@@ -293,6 +338,19 @@ class AdminController extends Controller
         $purchase = Purchase::find($id)->toArray();
         $result = ['records' => $purchase];
         return view('admin/purchase/updatePurchase', $result);
+    }
+
+    /**
+     * 顯示更新課程資訊頁面
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUpdateCourseContent($id)
+    {
+        $courseContent = CourseContent::find($id)->toArray();
+        $result = ['records' => $courseContent];
+        return view('admin/CourseContent/updateCourseContent', $result);
     }
 
     /**
@@ -361,6 +419,19 @@ class AdminController extends Controller
     }
 
     /**
+     * 刪除課程內容
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyCourseContent($id)
+    {
+        $courseContent = CourseContent::find($id);
+        $status = $courseContent->delete();
+        return Redirect::to('/admin/courseContents');
+    }
+
+    /**
      * 儲存購物車
      *
      * @param  \Illuminate\Http\Request  $request
@@ -377,7 +448,7 @@ class AdminController extends Controller
     }
 
     /**
-     * 儲存購物車
+     * 儲存訂單
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -392,5 +463,24 @@ class AdminController extends Controller
         ];
         $status = Purchase::create($purchaseForm);
         return Redirect::to('/admin/purchases');
+    }
+
+    /**
+     * 儲存課程資料
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeCourseContent(Request $request)
+    {
+        $courseContentForm = [
+            'course_id' => $request->get('course_id'),
+            'content_sequence' => $request->get('content_sequence'),
+            'content_chapter_name' => $request->get('content_chapter_name'),
+            'content' => $request->get('content'),
+            'YouTube' => $request->get('YouTube'),
+        ];
+        $status = CourseContent::create($courseContentForm);
+        return Redirect::to('/admin/courseContents');
     }
 }

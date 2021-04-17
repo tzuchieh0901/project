@@ -10,7 +10,7 @@
                 <input type="text" class="form-control" id="user_id" name="user_id" required="required" placeholder="請輸入user_id">
             </div>
             <div class="form-group">
-                <label for="email">course_id</label>
+                <label for="course_id">course_id</label>
                 <input type="text" class="form-control" id="course_id" name="course_id" required="required" placeholder="請輸入course_id">
             </div>
             <button type="submit" class="btn btn-primary">送出</button>
