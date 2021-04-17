@@ -43,6 +43,12 @@ class CourseController extends Controller
      */
     public function courseDetail($id)
     {
+        // 判斷是否有此堂課
+        $checkThisCourse = Course::find($id);
+        if ($checkThisCourse == null) {
+            abort(404);
+        }
+
         $course = Course::find($id)->toArray();
 
         // 判斷是否有登入

@@ -72,9 +72,15 @@ class ClassroomController extends Controller
      */
     public function content($courseId, $content_sequence)
     {
-        $userId = Auth::user()->id;
+        // 判斷此章節是否存在
+        $isTrue = CourseContent::where('course_id', '=', $courseId)
+                    ->where('content_sequence', '=', $content_sequence)->get()->toArray();
+        if ($isTrue == null) {
+            throw new WebException('此章節不存在', 404);
+        }
 
         // 判斷身份(老師、學生、管理者)
+        $userId = Auth::user()->id;
         $checkRole = User::where('id', '=', $userId)->select('role')->get()->toArray();
         $role = $checkRole[0]['role'];
 
@@ -83,7 +89,7 @@ class ClassroomController extends Controller
             $checkTeacherAuthorize = TeacherCourse::where('course_id', '=', $courseId)
                 ->where('teacher_id', '=', $userId)->get()->toArray();
             if (!$checkTeacherAuthorize) {
-                throw new WebException('您沒不是此堂課的老師', 403);
+                throw new WebException('您不是此堂課的老師', 403);
             }
         } elseif ($role == 'user') {
             $checkUserAuthorize = StudentCourse::where('course_id', '=', $courseId)

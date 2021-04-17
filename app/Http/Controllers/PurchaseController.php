@@ -38,6 +38,10 @@ class PurchaseController extends Controller
         $carts = User::find($userId)->cart()->get()->toArray();
         $now = Carbon::now();
 
+        if ($carts == null) {
+            abort(403);
+        }
+
         foreach ($carts as $cart) {
             $purchaseData[] = [
                 'user_id' => $cart['pivot']['user_id'],
