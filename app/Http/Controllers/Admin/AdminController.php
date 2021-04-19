@@ -118,7 +118,7 @@ class AdminController extends Controller
     {
         $teacherCourses = TeacherCourse::all()->toArray();
         $result = ['records' => $teacherCourses];
-        return view('admin/teacherCourse/teacherCourseList', $result);
+        return view('admin/teacher_course/teacherCourseList', $result);
     }
 
     /**
@@ -130,7 +130,7 @@ class AdminController extends Controller
     {
         $studentCourses = StudentCourse::all()->toArray();
         $result = ['records' => $studentCourses];
-        return view('admin/studentCourse/studentCourseList', $result);
+        return view('admin/student_course/studentCourseList', $result);
     }
 
     /**
@@ -190,7 +190,7 @@ class AdminController extends Controller
      */
     public function createTeacherCourse()
     {
-        return view('admin/teacherCourse/createTeacherCourse');
+        return view('admin/teacher_course/createTeacherCourse');
     }
 
     /**
@@ -200,7 +200,7 @@ class AdminController extends Controller
      */
     public function createStudentCourse()
     {
-        return view('admin/studentCourse/createStudentCourse');
+        return view('admin/student_course/createStudentCourse');
     }
 
     /**
@@ -447,7 +447,7 @@ class AdminController extends Controller
     {
         $teacherCourse = TeacherCourse::find($id)->toArray();
         $result = ['records' => $teacherCourse];
-        return view('admin/teacherCourse/updateTeacherCourse', $result);
+        return view('admin/teacher_course/updateTeacherCourse', $result);
     }
 
     /**
@@ -460,7 +460,7 @@ class AdminController extends Controller
     {
         $studentCourse = StudentCourse::find($id)->toArray();
         $result = ['records' => $studentCourse];
-        return view('admin/studentCourse/updateStudentCourse', $result);
+        return view('admin/student_course/updateStudentCourse', $result);
     }
 
     /**
