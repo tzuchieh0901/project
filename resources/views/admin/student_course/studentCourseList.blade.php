@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-10 col-12">
-                <h2 class="h2">所有學生的課程</h2>
+                <h2 class="h2">所有學生的課程資訊</h2>
             </div>
             <div class="col-sm-2 col-12">
                 <a type="button" class="btn btn-success float-right" href="{{ url('/admin/createStudentCourse/') }}">
