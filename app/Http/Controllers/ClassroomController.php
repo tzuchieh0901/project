@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\models\CourseContent;
-use App\models\StudentCourse;
-use App\models\TeacherCourse;
-use App\models\Course;
-use App\models\User;
+use App\Models\CourseContent;
+use App\Models\StudentCourse;
+use App\Models\TeacherCourse;
+use App\Models\Course;
+use App\Models\User;
 use Auth;
 use Exception;
 use App\Exceptions\WebException;
