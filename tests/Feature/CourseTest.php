@@ -29,5 +29,4 @@ class CourseTest extends TestCase
         $response = $this->get('/course/1');
         $response->assertViewIs('course');
     }
-
 }

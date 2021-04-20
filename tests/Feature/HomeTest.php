@@ -83,4 +83,3 @@ class HomeTest extends TestCase
         $this->assertEquals(302, $response->status());
     }
 }
-
