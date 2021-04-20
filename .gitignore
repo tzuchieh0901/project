@@ -4,7 +4,8 @@
 /storage/*.key
 /vendor
 /laradock
-/public
+/public/images
+storage/report
 .env
 .env.backup
 .phpunit.result.cache
