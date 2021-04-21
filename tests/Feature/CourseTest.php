@@ -26,6 +26,12 @@ class CourseTest extends TestCase
      */
     public function testViewCourse()
     {
+        Course::create([
+            'name' => 'test name',
+            'description' => 'description',
+            'outline' => 'this is outline.',
+            'price' => 500,
+        ]);
         $response = $this->get('/course/1');
         $response->assertViewIs('course');
     }
