@@ -55,14 +55,14 @@ class TeacherController extends Controller
         $path = $request->file('image')->store('images', 'public');
         $image->move(public_path('/images'), $path);
 
-        $courseForm = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-            'outline' => $request->get('outline'),
-            'price' => $request->get('price'),
-            'image' => $path,
-        ];
-        $storeCourseData = Course::create($courseForm)->toArray();
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:100',
+            'description' => 'required|string|max:255',
+            'outline' => 'required|string',
+            'price' => 'required|integer|min:0',
+            'image' => 'required|mimes:jpeg,bmp,png|size:4000',
+        ]);
+        $storeCourseData = Course::create($validatedData)->toArray();
         $storeCourseID = $storeCourseData['id'];
 
         $userId = Auth::user()->id;
@@ -113,15 +113,15 @@ class TeacherController extends Controller
      */
     public function updateCourse(Request $request, $id)
     {
-        $courseForm = [
-            'name' => $request->get('name'),
-            'description' => trim($request->get('description')) ?? '',
-            'outline' => $request->get('outline') ?? '',
-            'price' => $request->get('price'),
-        ];
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:100',
+            'description' => 'required|string|max:255',
+            'outline' => 'required|string',
+            'price' => 'required|integer|min:0',
+        ]);
 
         $course = Course::find($id);
-        $status = $course->update($request->toArray());
+        $status = $course->update($validatedData);
         return Redirect::to('/teacher/courses');
     }
 
@@ -190,14 +190,14 @@ class TeacherController extends Controller
      */
     public function storeCourseContent(Request $request, $courseId)
     {
-        $courseContentForm = [
-            'course_id' => $request->get('course_id'),
-            'content_sequence' => $request->get('content_sequence'),
-            'content_chapter_name' => $request->get('content_chapter_name'),
-            'content' => $request->get('content'),
-            'YouTube' => $request->get('YouTube'),
-        ];
-        CourseContent::create($courseContentForm);
+        $validatedData = $request->validate([
+            'course_id' => 'required|integer',
+            'content_sequence' => 'required|integer',
+            'content_chapter_name' => 'required|string|max:100',
+            'content' => 'required|string',
+            'YouTube' => 'required|string',
+        ]);
+        CourseContent::create($validatedData);
         return Redirect::to("/teacher/courses");
     }
 
@@ -225,17 +225,17 @@ class TeacherController extends Controller
      */
     public function storeUpdateCourseContent(Request $request)
     {
-        $courseContentForm = [
-            'course_id' => $request->get('course_id'),
-            'content_sequence' => $request->get('content_sequence'),
-            'content_chapter_name' => $request->get('content_chapter_name'),
-            'content' => $request->get('content'),
-            'YouTube' => $request->get('YouTube'),
-        ];
+        $validatedData = $request->validate([
+            'course_id' => 'required|integer',
+            'content_sequence' => 'required|integer',
+            'content_chapter_name' => 'required|string|max:100',
+            'content' => 'required|string',
+            'YouTube' => 'required|string',
+        ]);
 
         $id = $request->get('id');
         $courseContent = CourseContent::find($id);
-        $courseContent->update($courseContentForm);
+        $courseContent->update($validatedData);
         return Redirect::to('/teacher/courses');
     }
 }

@@ -85,13 +85,13 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $courseForm = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-            'outline' => $request->get('outline'),
-            'price' => $request->get('price'),
-        ];
-        $status = Course::create($courseForm);
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:100',
+            'description' => 'required|string|max:255',
+            'outline' => 'required|string',
+            'price' => 'required|numeric|min:0',
+        ]);
+        $status = Course::create($validatedData);
         return Redirect::to('/admin/courses');
     }
 }
