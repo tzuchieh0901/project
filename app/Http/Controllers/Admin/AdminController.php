@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Purchase;
-use App\Models\Cart;
 use App\Models\CourseContent;
 use App\Models\TeacherCourse;
 use App\Models\StudentCourse;
@@ -38,30 +37,6 @@ class AdminController extends Controller
     }
 
     /**
-     * 後台顯示所有的學生
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function studentsList()
-    {
-        $users = User::all()->where('role', '=', 'user')->toArray();
-        $result = ['records' => $users];
-        return view('admin/student/studentsList', $result);
-    }
-
-    /**
-     * 後台顯示所有的老師
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function teachersList()
-    {
-        $teachers = User::all()->where('role', '=', 'teacher')->toArray();
-        $result = ['records' => $teachers];
-        return view('admin/teacher/teachersList', $result);
-    }
-
-    /**
      * 後台顯示所有的課程
      *
      * @return \Illuminate\Http\Response
@@ -71,30 +46,6 @@ class AdminController extends Controller
         $courses = Course::all()->toArray();
         $result = ['records' => $courses];
         return view('admin/course/courseList', $result);
-    }
-
-    /**
-     * 後台顯示所有的購物車
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function cartsList()
-    {
-        $carts = Cart::all()->toArray();
-        $result = ['records' => $carts];
-        return view('admin/cart/cartList', $result);
-    }
-
-    /**
-     * 後台顯示所有的訂單
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function purchaseList()
-    {
-        $purchases = Purchase::all()->toArray();
-        $result = ['records' => $purchases];
-        return view('admin/purchase/purchaseList', $result);
     }
 
     /**
@@ -141,36 +92,6 @@ class AdminController extends Controller
     public function createCourses()
     {
         return view('admin/course/createCourse');
-    }
-
-    /**
-     * 新增購物車頁面
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createCart()
-    {
-        return view('admin/cart/createCart');
-    }
-
-    /**
-     * 新增學生頁面
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createStudent()
-    {
-        return view('admin/student/createStudent');
-    }
-
-    /**
-     * 新增訂單頁面
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createPurchase()
-    {
-        return view('admin/purchase/createPurchase');
     }
 
     /**
@@ -228,88 +149,6 @@ class AdminController extends Controller
         $courses = Course::find($id)->toArray();
         $result = ['records' => $courses];
         return view('admin/course/updateCourse', $result);
-    }
-
-    /**
-     * 更新學生資訊
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateStudent(Request $request, $id)
-    {
-        $studentForm = [
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'role' => 'user',
-            'password' => Hash::make($request->get('password')),
-        ];
-
-        $student = User::find($id);
-        $status = $student->update($studentForm);
-        return Redirect::to('/admin/students');
-    }
-
-    /**
-     * 更新教師資訊
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateTeacher(Request $request, $id)
-    {
-        $teacherForm = [
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'role' => 'teacher',
-            'password' => Hash::make($request->get('password')),
-        ];
-
-        $teacher = User::find($id);
-        $status = $teacher->update($teacherForm);
-        return Redirect::to('/admin/teachers');
-    }
-
-    /**
-     * 更新購物車資訊
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateCart(Request $request, $id)
-    {
-        $cartForm = [
-            'user_id' => $request->get('user_id'),
-            'course_id' => $request->get('course_id'),
-        ];
-
-        $cart = Cart::find($id);
-        $status = $cart->update($cartForm);
-        return Redirect::to('/admin/carts');
-    }
-
-    /**
-     * 更新購物車資訊
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updatePurchase(Request $request, $id)
-    {
-        $purchaseForm = [
-            'user_id' => $request->get('user_id'),
-            'course_id' => $request->get('course_id'),
-            'course_name' => $request->get('course_name'),
-            'price' => $request->get('price'),
-        ];
-
-        $purchase = Purchase::find($id);
-        $status = $purchase->update($purchaseForm);
-        return Redirect::to('/admin/purchases');
     }
 
     /**
@@ -373,58 +212,6 @@ class AdminController extends Controller
     }
 
     /**
-     * 顯示更新學生頁面
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showUpdateStudent($id)
-    {
-        $student = User::find($id)->toArray();
-        $result = ['records' => $student];
-        return view('admin/student/updateStudent', $result);
-    }
-
-    /**
-     * 顯示更新教師頁面
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showUpdateTeacher($id)
-    {
-        $teacher = User::find($id)->toArray();
-        $result = ['records' => $teacher];
-        return view('admin/teacher/updateTeacher', $result);
-    }
-
-    /**
-     * 顯示更新購物車頁面
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showUpdateCart($id)
-    {
-        $cart = Cart::find($id)->toArray();
-        $result = ['records' => $cart];
-        return view('admin/cart/updateCart', $result);
-    }
-
-    /**
-     * 顯示更新購物車頁面
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showUpdatePurchase($id)
-    {
-        $purchase = Purchase::find($id)->toArray();
-        $result = ['records' => $purchase];
-        return view('admin/purchase/updatePurchase', $result);
-    }
-
-    /**
      * 顯示更新課程資訊頁面
      *
      * @param  int  $id
@@ -477,58 +264,6 @@ class AdminController extends Controller
     }
 
     /**
-     * 刪除學生
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroyStudent($id)
-    {
-        $student = User::find($id);
-        $status = $student->delete();
-        return Redirect::to('/admin/students');
-    }
-
-    /**
-     * 刪除老師
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroyTeacher($id)
-    {
-        $teacher = User::find($id);
-        $status = $teacher->delete();
-        return Redirect::to('/admin/teachers');
-    }
-
-    /**
-     * 刪除購物車
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroyCart($id)
-    {
-        $cart = Cart::find($id);
-        $status = $cart->delete();
-        return Redirect::to('/admin/carts');
-    }
-
-    /**
-     * 刪除訂單
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroyPurchase($id)
-    {
-        $cart = Purchase::find($id);
-        $status = $cart->delete();
-        return Redirect::to('/admin/purchases');
-    }
-
-    /**
      * 刪除課程內容
      *
      * @param  int  $id
@@ -565,40 +300,6 @@ class AdminController extends Controller
         $studentCourse = StudentCourse::find($id);
         $status = $studentCourse->delete();
         return Redirect::to('/admin/studentCourses');
-    }
-
-    /**
-     * 儲存購物車
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function storeCart(Request $request)
-    {
-        $cartForm = [
-            'course_id' => $request->get('course_id'),
-            'user_id' => $request->get('user_id'),
-        ];
-        $status = Cart::create($cartForm);
-        return Redirect::to('/admin/carts');
-    }
-
-    /**
-     * 儲存訂單
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function storePurchase(Request $request)
-    {
-        $purchaseForm = [
-            'course_id' => $request->get('course_id'),
-            'user_id' => $request->get('user_id'),
-            'course_name' => $request->get('course_name'),
-            'price' => $request->get('price'),
-        ];
-        $status = Purchase::create($purchaseForm);
-        return Redirect::to('/admin/purchases');
     }
 
     /**

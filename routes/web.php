@@ -70,33 +70,32 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::get('/showUpdateCourse/{id}', 'Admin\AdminController@showUpdateCourse');
 
     // student
-    Route::get('/students', 'Admin\AdminController@studentsList');
-    Route::get('/createStudent', 'Admin\AdminController@createStudent');
-    Route::get('/updateStudent/{id}', 'Admin\AdminController@updateStudent');
-    Route::get('/showUpdateStudent/{id}', 'Admin\AdminController@showUpdateStudent');
-    Route::get('/destroyStudent/{id}', 'Admin\AdminController@destroyStudent');
+    Route::get('/students', 'Admin\UserController@studentsList');
+    Route::get('/updateStudent/{id}', 'Admin\UserController@updateStudent');
+    Route::get('/showUpdateStudent/{id}', 'Admin\UserController@showUpdateStudent');
+    Route::get('/destroyStudent/{id}', 'Admin\UserController@destroyStudent');
 
     // teacher
-    Route::get('/teachers', 'Admin\AdminController@teachersList');
-    Route::get('/destroyTeacher/{id}', 'Admin\AdminController@destroyTeacher');
-    Route::get('/updateTeacher/{id}', 'Admin\AdminController@updateTeacher');
-    Route::get('/showUpdateTeacher/{id}', 'Admin\AdminController@showUpdateTeacher');
+    Route::get('/teachers', 'Admin\UserController@teachersList');
+    Route::get('/destroyTeacher/{id}', 'Admin\UserController@destroyTeacher');
+    Route::get('/updateTeacher/{id}', 'Admin\UserController@updateTeacher');
+    Route::get('/showUpdateTeacher/{id}', 'Admin\UserController@showUpdateTeacher');
 
     // cart
-    Route::get('/carts', 'Admin\AdminController@cartsList');
-    Route::get('/destroyCart/{id}', 'Admin\AdminController@destroyCart');
-    Route::get('/updateCart/{id}', 'Admin\AdminController@updateCart');
-    Route::get('/showUpdateCart/{id}', 'Admin\AdminController@showUpdateCart');
-    Route::get('/createCart', 'Admin\AdminController@createCart');
-    Route::post('/carts', 'Admin\AdminController@storeCart');
+    Route::get('/carts', 'Admin\CartController@cartsList');
+    Route::get('/destroyCart/{id}', 'Admin\CartController@destroyCart');
+    Route::get('/updateCart/{id}', 'Admin\CartController@updateCart');
+    Route::get('/showUpdateCart/{id}', 'Admin\CartController@showUpdateCart');
+    Route::get('/createCart', 'Admin\CartController@createCart');
+    Route::post('/carts', 'Admin\CartController@storeCart');
 
     // purchase
-    Route::get('/purchases', 'Admin\AdminController@purchaseList');
-    Route::get('/destroyPurchase/{id}', 'Admin\AdminController@destroyPurchase');
-    Route::get('/updatePurchase/{id}', 'Admin\AdminController@updatePurchase');
-    Route::get('/showUpdatePurchase/{id}', 'Admin\AdminController@showUpdatePurchase');
-    Route::get('/createPurchase', 'Admin\AdminController@createPurchase');
-    Route::post('/purchases', 'Admin\AdminController@storePurchase');
+    Route::get('/purchases', 'Admin\PurchaseController@purchaseList');
+    Route::get('/destroyPurchase/{id}', 'Admin\PurchaseController@destroyPurchase');
+    Route::get('/updatePurchase/{id}', 'Admin\PurchaseController@updatePurchase');
+    Route::get('/showUpdatePurchase/{id}', 'Admin\PurchaseController@showUpdatePurchase');
+    Route::get('/createPurchase', 'Admin\PurchaseController@createPurchase');
+    Route::post('/purchases', 'Admin\PurchaseController@storePurchase');
 
     // course_content
     Route::get('/courseContents', 'Admin\AdminController@courseContentList');
