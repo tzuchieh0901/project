@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         @if($records['image'])
-            <img src="{{ asset($records['image']) }}" style="height: 200px;width: 100%;">
+            <img src="https://104-aws-training-cicd-bucket.s3-ap-northeast-1.amazonaws.com/tzuchieh.hsieh/{{ $records['image'] }}" style="height: 200px;width: 100%;">
         @else
             <img src="https://images.pexels.com/photos/276452/pexels-photo-276452.jpeg" style="height: 200px;width: 100%;">
         @endif

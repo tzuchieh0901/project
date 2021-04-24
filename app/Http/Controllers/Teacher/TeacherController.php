@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Course;
 use App\models\CourseContent;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\UploadedFile;
+use Storage;
 
 class TeacherController extends Controller
 {
@@ -51,20 +53,33 @@ class TeacherController extends Controller
      */
     public function teacherStoreCourse(Request $request)
     {
-        $image = $request->file('image');
-        $path = $request->file('image')->store('images', 'public');
-        $image->move(public_path('/images'), $path);
-
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
             'description' => 'required|string|max:255',
             'outline' => 'required|string',
             'price' => 'required|integer|min:0',
-            'image' => 'required|mimes:jpeg,bmp,png|size:4000',
+            'image' => 'required|mimes:jpeg,bmp,png',
         ]);
-        $storeCourseData = Course::create($validatedData)->toArray();
-        $storeCourseID = $storeCourseData['id'];
 
+        // 存照片到S3
+        $image = md5(uniqid());
+        $path = $request->image->path();
+        $extension = $request->image->extension();
+        $imageName = 'tzuchieh.hsieh/' . $image . '.' . $extension;
+        Storage::disk('s3')->put($imageName, file_get_contents($path), 'public');
+
+        // 課程資訊
+        $courseData = [
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'outline' => $request->get('outline'),
+            'price' => $request->get('price'),
+            'image' => $image . '.' . $extension,
+        ];
+        $storeCourseData = Course::create($courseData)->toArray();
+
+        // 老師教的課程
+        $storeCourseID = $storeCourseData['id'];
         $userId = Auth::user()->id;
         $teacherForm = [
             'teacher_id' => $userId,

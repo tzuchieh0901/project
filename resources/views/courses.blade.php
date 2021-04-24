@@ -11,7 +11,7 @@
                         @if($course['image'] === null)
                             <img src="https://images.pexels.com/photos/276452/pexels-photo-276452.jpeg" class="img-thumbnail">
                         @else
-                            <img src="{{ asset($course['image']) }}" class="img-thumbnail">
+                            <img src="https://104-aws-training-cicd-bucket.s3-ap-northeast-1.amazonaws.com/tzuchieh.hsieh/{{ $course['image'] }}" class="img-thumbnail">
                         @endif
                     </div>
                     <div class="col-md-8">

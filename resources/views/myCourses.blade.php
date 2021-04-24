@@ -9,7 +9,7 @@
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         @if($course['image'])
-                            <img src="{{ asset($course['image']) }}" style="height: 200px;width: 100%;">
+                            <img src="https://104-aws-training-cicd-bucket.s3-ap-northeast-1.amazonaws.com/tzuchieh.hsieh/{{ $course['image'] }}" style="height: 200px;width: 100%;">
                         @else
                             <img src="https://images.pexels.com/photos/276452/pexels-photo-276452.jpeg" style="height: 200px;width: 100%;">
                         @endif
