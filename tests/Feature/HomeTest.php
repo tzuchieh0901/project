@@ -59,10 +59,12 @@ class HomeTest extends TestCase
             'user_id' => '2',
             'course_id' => '1',
         ]);
+
         $response = $this->call('GET', '/addCartItem/2', [
             'user_id' => '2',
             'course_id' => '1',
         ]);
+
         $this->assertEquals(302, $response->status());
     }
 
