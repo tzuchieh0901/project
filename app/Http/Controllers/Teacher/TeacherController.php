@@ -8,7 +8,7 @@ use Auth;
 use App\Models\TeacherCourse;
 use App\Models\User;
 use App\Models\Course;
-use App\models\CourseContent;
+use App\Models\CourseContent;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\UploadedFile;
 use Storage;

@@ -25,5 +25,6 @@ class CourseContent extends Model
         'content_chapter_name',
         'video',
         'content',
+        'YouTube',
     ];
 }
