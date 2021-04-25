@@ -18,7 +18,7 @@
                     <tr>
                         <td>
                             @if($course['image'])
-                                <img src="{{ $course['image'] }}" style="width:160px; height:80px;">
+                                <img src="https://104-aws-training-cicd-bucket.s3-ap-northeast-1.amazonaws.com/tzuchieh.hsieh/{{ $course['image'] }}" style="width:160px; height:80px;">
                             @else
                                 <img src="https://images.pexels.com/photos/276452/pexels-photo-276452.jpeg" style="width:160px; height:80px;">
                             @endif
