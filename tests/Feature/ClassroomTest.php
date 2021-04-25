@@ -25,7 +25,7 @@ class ClassroomTest extends TestCase
     {
         $this->teacherLoginIn();
         $userId = Auth::user()->id;
-        Course::create([
+        $course = Course::create([
             'name' => 'test name',
             'description' => 'description',
             'outline' => 'this is outline.',
@@ -33,10 +33,10 @@ class ClassroomTest extends TestCase
         ]);
         TeacherCourse::create([
             'teacher_id' => $userId,
-            'course_id' => 1,
+            'course_id' => $course['id'],
         ]);
 
-        $response = $this->get('/classroom/1');
+        $response = $this->get("/classroom/{$course['id']}");
         $response->assertStatus(200);
     }
 
@@ -49,7 +49,7 @@ class ClassroomTest extends TestCase
     {
         $this->userLoginIn();
         $userId = Auth::user()->id;
-        Course::create([
+        $course = Course::create([
             'name' => 'test name',
             'description' => 'description',
             'outline' => 'this is outline.',
@@ -57,10 +57,10 @@ class ClassroomTest extends TestCase
         ]);
         StudentCourse::create([
             'student_id' => $userId,
-            'course_id' => 1,
+            'course_id' => $course['id'],
         ]);
 
-        $response = $this->get('/classroom/1');
+        $response = $this->get("/classroom/{$course['id']}");
         $response->assertStatus(200);
     }
 
@@ -73,14 +73,14 @@ class ClassroomTest extends TestCase
     {
         $this->userLoginIn();
         $userId = Auth::user()->id;
-        Course::create([
+        $course = Course::create([
             'name' => 'test name',
             'description' => 'description',
             'outline' => 'this is outline.',
             'price' => 500,
         ]);
 
-        $response = $this->get('/classroom/1');
+        $response = $this->get("/classroom/{$course['id']}");
         $response->assertStatus(403);
     }
 
@@ -101,7 +101,7 @@ class ClassroomTest extends TestCase
         ]);
         TeacherCourse::create([
             'teacher_id' => $userId,
-            'course_id' => 1,
+            'course_id' => $course['id'],
         ]);
         CourseContent::create([
             'course_id' => $course['id'],
@@ -110,7 +110,7 @@ class ClassroomTest extends TestCase
             'content' => '測試內容',
         ]);
 
-        $response = $this->get('/classroom/1/1');
+        $response = $this->get("/classroom/{$course['id']}/1");
         $response->assertStatus(200);
     }
 
@@ -131,7 +131,7 @@ class ClassroomTest extends TestCase
         ]);
         StudentCourse::create([
             'student_id' => $userId,
-            'course_id' => 1,
+            'course_id' => $course['id'],
         ]);
         CourseContent::create([
             'course_id' => $course['id'],
@@ -140,7 +140,7 @@ class ClassroomTest extends TestCase
             'content' => '測試內容',
         ]);
 
-        $response = $this->get("/classroom/1/1");
+        $response = $this->get("/classroom/{$course['id']}/1");
         $response->assertStatus(200);
     }
 
@@ -152,7 +152,7 @@ class ClassroomTest extends TestCase
     public function testNoContent()
     {
         $this->userLoginIn();
-        $response = $this->get('/classroom/999/1');
+        $response = $this->get('/classroom/999/999');
         $response->assertStatus(404);
     }
 }
