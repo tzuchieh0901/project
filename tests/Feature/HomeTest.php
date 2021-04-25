@@ -84,4 +84,16 @@ class HomeTest extends TestCase
         $response = $this->call('GET', '/removeCartItem/1');
         $this->assertEquals(302, $response->status());
     }
+
+    /**
+     * 測試使用者刪除購物車失敗
+     *
+     * @return void
+     */
+    public function testUserDestroyCartFailed()
+    {
+        $this->userLoginIn();
+        $response = $this->call('GET', '/removeCartItem/9999');
+        $this->assertEquals(500, $response->status());
+    }
 }
