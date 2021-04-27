@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Auth;
 use Tests\Feature\Log;
 use App\Models\Cart;
+use App\Models\Purchase;
+use App\Models\StudentCourse;
 
 class HomeTest extends TestCase
 {
@@ -35,15 +36,12 @@ class HomeTest extends TestCase
     {
         $this->userLoginIn();
         $cart = Cart::create([
-            'id' => '2',
             'user_id' => '2',
             'course_id' => '1',
         ]);
-        $response = $this->call('GET', '/addCartItem/2', [
-            'id' => '2',
-            'user_id' => '2',
-            'course_id' => '1',
-        ]);
+
+        $response = $this->call('GET', '/addCartItem/1');
+
         $this->assertEquals(302, $response->status());
     }
 
@@ -95,5 +93,43 @@ class HomeTest extends TestCase
         $this->userLoginIn();
         $response = $this->call('GET', '/removeCartItem/9999');
         $this->assertEquals(500, $response->status());
+    }
+
+    /**
+     * 測試使用者的購買紀錄
+     *
+     * @return void
+     */
+    public function testMyPurchases()
+    {
+        $this->userLoginIn();
+        $userId = Auth::user()->id;
+
+        $purchase = StudentCourse::create([
+            'student_id' => $userId,
+            'course_id' => '1',
+        ]);
+        $response = $this->call('GET', '/myCourses');
+        $this->assertEquals(200, $response->status());
+    }
+
+    /**
+     * 測試使用者的購買紀錄
+     *
+     * @return void
+     */
+    public function testMyCourses()
+    {
+        $this->userLoginIn();
+        $userId = Auth::user()->id;
+
+        $purchase = Purchase::create([
+            'user_id' => $userId,
+            'course_id' => '1',
+            'course_name' => 'test',
+            'price' => '500',
+        ]);
+        $response = $this->call('GET', '/myPurchases');
+        $this->assertEquals(200, $response->status());
     }
 }
