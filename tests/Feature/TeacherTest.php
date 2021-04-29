@@ -43,5 +43,4 @@ class TeacherTest extends TestCase
         $response = $this->get('teacher/courses');
         $response->assertStatus(200);
     }
-
 }
