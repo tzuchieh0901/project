@@ -6,8 +6,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+use Auth;
 use App\Models\Purchase;
 use App\Models\StudentCourse;
+use App\Models\Cart;
 
 class PurchaseTest extends TestCase
 {
@@ -22,18 +24,12 @@ class PurchaseTest extends TestCase
     {
         $this->userLoginIn();
 
-        $response = Purchase::insert([
-            'id' => 1000,
-            'user_id' => 55688,
+        Cart::create([
+            'user_id' => Auth::id(),
             'course_id' => 2,
-            'course_name' => '測試課程',
-            'price' => 500,
-            'created_at' => '2021-04-21 11:35:06',
-            'updated_at' => '2021-04-21 11:35:06',
         ]);
 
-        $purchase = count(Purchase::where('id', '=', 1000)->get());
-
-        $this->assertEquals(1, $purchase);
+        $response = $this->call('GET', '/purchase');
+        $this->assertEquals(200, $response->status());
     }
 }

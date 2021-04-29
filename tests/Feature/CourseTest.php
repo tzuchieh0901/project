@@ -13,6 +13,15 @@ class CourseTest extends TestCase
     use DatabaseTransactions;
 
     /**
+     * 測試所有課程讀取頁面是否正常
+     */
+    public function testIndexPage()
+    {
+        $response = $this->get('/courses');
+        $response->assertViewIs('courses');
+    }
+
+    /**
      * 測試首頁讀取頁面是否正常
      */
     public function testViewHomePage()
