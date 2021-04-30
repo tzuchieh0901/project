@@ -12,6 +12,8 @@ use App\Models\CourseContent;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\UploadedFile;
 use Storage;
+use App\Http\Requests\StoreCourse;
+use App\Http\Requests\StoreCourseContent;
 
 class TeacherController extends Controller
 {
@@ -48,19 +50,11 @@ class TeacherController extends Controller
     /**
      * 老師儲存課程資訊
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request\StoreCourse  $request
      * @return \Illuminate\Http\Response
      */
-    public function teacherStoreCourse(Request $request)
+    public function teacherStoreCourse(StoreCourse $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:100',
-            'description' => 'required|string|max:255',
-            'outline' => 'required|string',
-            'price' => 'required|integer|min:0',
-            'image' => 'required|mimes:jpeg,bmp,png',
-        ]);
-
         // 存照片到S3
         $image = md5(uniqid());
         $path = $request->image->path();
@@ -122,21 +116,14 @@ class TeacherController extends Controller
     /**
      * 更新課程資訊
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request\StoreCourse  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateCourse(Request $request, $id)
+    public function updateCourse(StoreCourse $request, $id)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:100',
-            'description' => 'required|string|max:255',
-            'outline' => 'required|string',
-            'price' => 'required|integer|min:0',
-        ]);
-
         $course = Course::find($id);
-        $status = $course->update($validatedData);
+        $status = $course->update($request->all());
         return Redirect::to('/teacher/courses');
     }
 
@@ -199,20 +186,13 @@ class TeacherController extends Controller
     /**
      * 儲存課程內容
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request\StoreCourseContent  $request
      * @param  int  $courseId
      * @return \Illuminate\Http\Response
      */
-    public function storeCourseContent(Request $request, $courseId)
+    public function storeCourseContent(StoreCourseContent $request, $courseId)
     {
-        $validatedData = $request->validate([
-            'course_id' => 'required|integer',
-            'content_sequence' => 'required|integer',
-            'content_chapter_name' => 'required|string|max:100',
-            'content' => 'required|string',
-            'YouTube' => 'required|string',
-        ]);
-        CourseContent::create($validatedData);
+        CourseContent::create($request->all());
         return Redirect::to("/teacher/courses");
     }
 
@@ -235,22 +215,14 @@ class TeacherController extends Controller
     /**
      * 儲存更新課程內容
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request\StoreCourseContent  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeUpdateCourseContent(Request $request)
+    public function storeUpdateCourseContent(StoreCourseContent $request)
     {
-        $validatedData = $request->validate([
-            'course_id' => 'required|integer',
-            'content_sequence' => 'required|integer',
-            'content_chapter_name' => 'required|string|max:100',
-            'content' => 'required|string',
-            'YouTube' => 'required|string',
-        ]);
-
         $id = $request->get('id');
         $courseContent = CourseContent::find($id);
-        $courseContent->update($validatedData);
+        $courseContent->update($request->all());
         return Redirect::to('/teacher/courses');
     }
 }
