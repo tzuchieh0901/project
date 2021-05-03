@@ -9,4 +9,20 @@
 - Docker
 - Docker Compose
 
+## 系統架構
+### CI / CD
+![CI/CD](image/cicd.png)
+### AWS
+![AWS](image/aws.png)
 
+## 系統截圖
+首頁
+![首頁](image/home.png)
+教師
+![教師](image/teacher.png)
+教室
+![教師](image/classroom.png)
+購物車
+![教師](image/cart.png)
+管理者
+![教師](image/admin.png)
